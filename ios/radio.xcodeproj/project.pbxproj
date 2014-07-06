@@ -64,6 +64,8 @@
 		C2D4668C196917C900698DAD /* TrackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrackModel.m; path = Model/TrackModel.m; sourceTree = "<group>"; };
 		C2D4668F196921F000698DAD /* RadioListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioListViewCell.h; path = View/RadioListViewCell.h; sourceTree = "<group>"; };
 		C2D46690196921F000698DAD /* RadioListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RadioListViewCell.m; path = View/RadioListViewCell.m; sourceTree = "<group>"; };
+		C2D4669E1969333C00698DAD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C2D4669F1969333E00698DAD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C3B443D70E70449082394370 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -364,6 +366,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				C23624A419680D210044E37E /* en */,
+				C2D4669E1969333C00698DAD /* zh-Hans */,
+				C2D4669F1969333E00698DAD /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

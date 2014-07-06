@@ -41,12 +41,13 @@
         rect.size.height = CellHeight;
         
         [self setFrame:rect];
+//        [self.layer setBorderWidth:1.0];
         
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, CellHeight-20, CellHeight-20)];
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_channel.logo]];
         _imageView.image = [UIImage imageWithData:imageData];
         
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CellHeight, 0, rect.size.width-CellHeight, 100)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CellHeight, 0, rect.size.width-CellHeight, CellHeight)];
         _nameLabel.text = _channel.title;
         
         [self addSubview:_imageView];

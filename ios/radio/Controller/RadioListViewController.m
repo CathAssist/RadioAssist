@@ -87,6 +87,7 @@
         [weakSelf refreshRadioList];
     }];
     
+    _radioList.showsPullToRefresh = true;
     [_radioList triggerPullToRefresh];
 }
 

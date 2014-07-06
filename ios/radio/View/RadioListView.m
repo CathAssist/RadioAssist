@@ -27,6 +27,7 @@
         // Initialization code
         self.delegate = controller;
         self.dataSource = controller;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
     return self;
