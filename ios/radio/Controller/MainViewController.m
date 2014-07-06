@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "ListViewController.h"
 #import "../View/CurrentPlayerView.h"
 
 @interface MainViewController ()
@@ -31,9 +30,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    
-    [self.view addSubview:_player];
+    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -43,6 +40,8 @@
         CGRect rtClient = self.view.frame;
         
         _player.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y+rtClient.size.height-50, rtClient.size.width, 50);
+        
+        [self.view addSubview:_player];
     }
 }
 

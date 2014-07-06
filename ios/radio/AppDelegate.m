@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "Controller/MainViewController.h"
-#import "Controller/ListViewController.h"
 #import "Controller/RadioListViewController.h"
 
 @interface AppDelegate ()
@@ -26,7 +25,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    self.window.rootViewController = [[MainViewController alloc] initWithRootViewController:[[ListViewController alloc] initWithNibName:nil bundle:nil]];
+    self.window.rootViewController = [[MainViewController alloc] initWithRootViewController:[[RadioListViewController alloc] initWithNibName:nil bundle:nil]];
     
     [self.window makeKeyAndVisible];
     return YES;

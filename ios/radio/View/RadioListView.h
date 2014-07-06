@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "../Controller/RadioListViewController.h"
 
-@interface RadioListView : UITableView<UITableViewDataSource,UITableViewDelegate>
+@interface RadioListView : UITableView
+
+- (instancetype) initWithController : (RadioListViewController*)controller;
 
 @end

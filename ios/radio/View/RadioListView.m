@@ -7,42 +7,29 @@
 //
 
 #import "RadioListView.h"
+#import "RadioListViewCell.h"
+#import "../Controller/RadioListViewController.h"
+
+@interface RadioListView()
+{
+}
+
+@end
 
 @implementation RadioListView
 
-- (instancetype)initWithFrame:(CGRect)frame
+
+- (instancetype) initWithController : (RadioListViewController*)controller
 {
-    self = [super initWithFrame:frame];
-    if (self)
+    self = [super initWithFrame:CGRectZero];
+    if(self)
     {
         // Initialization code
-        self.delegate = self;
-        self.dataSource = self;
+        self.delegate = controller;
+        self.dataSource = controller;
     }
+    
     return self;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return 30;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
-    
-    // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"Item %d",indexPath.row+1];
-    
-    return cell;
 }
 
 /*

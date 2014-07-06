@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RadioListViewController : UITableViewController
+@interface RadioListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

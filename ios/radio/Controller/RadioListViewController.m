@@ -7,20 +7,43 @@
 //
 
 #import "RadioListViewController.h"
+#import "SVPullToRefresh.h"
+#import "AFNetworking.h"
+#import "../View/RadioListViewCell.h"
+#import "../View/RadioListView.h"
+#import "../Model/ChannelModel.h"
 
 @interface RadioListViewController ()
-
+{
+    RadioListView *_radioList;
+    NSDateFormatter* _dateFormatter;
+    NSMutableArray* _channels;
+}
 @end
 
 @implementation RadioListViewController
 
-- (instancetype)initWithStyle:(UITableViewStyle)style
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
-    if (self) {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
         // Custom initialization
+        //设置日期格式化方式
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setLocale:[NSLocale currentLocale]];
+        [_dateFormatter setDateFormat:@"YYYY-MM-dd"];
+        
+        _channels = [NSMutableArray new];
     }
     return self;
+}
+
+- (BOOL) shouldAutorotate
+{
+    //不支持自动旋转
+    return FALSE;
 }
 
 - (void)viewDidLoad
@@ -32,12 +55,84 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [self setTitle:NSLocalizedString(@"App Name",nil)];
+    
+    _radioList = [[RadioListView alloc] initWithController:self];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    CGRect rtClient = self.view.frame;
+    
+    _radioList.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height-50);
+    
+    [self.view addSubview:_radioList];
+    
+    
+    //防止SVPullToRefresh在iOS7上会缩到导航栏和状态栏后。
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        
+        UIEdgeInsets insets = _radioList.contentInset;
+        insets.top = self.navigationController.navigationBar.bounds.size.height +
+        [UIApplication sharedApplication].statusBarFrame.size.height;
+        _radioList.contentInset = insets;
+        _radioList.scrollIndicatorInsets = insets;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [_radioList addPullToRefreshWithActionHandler:^{
+        [weakSelf refreshRadioList];
+    }];
+    
+    [_radioList triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL) refreshRadioList
+{
+    NSString* strUrl = @"http://www.cathassist.org/radio/getradio.php";
+    NSLog(@"Fetch channel from:%@",strUrl);
+    
+    //[AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:strUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         if(responseObject!=nil)
+         {
+             [_channels removeAllObjects];
+             
+             NSDictionary* dict = responseObject;
+             
+             NSArray *keys = [dict allKeys];// 所有key
+             for(int i=0;i<[keys count];i++)
+             {
+                 NSString *key = [keys objectAtIndex:i];
+                 ChannelModel* model = [[ChannelModel alloc] initWithDictionary:[dict objectForKey:key]];
+                 model.key = key;
+                 
+                 [_channels addObject:model];
+                 NSLog(@"Load channel:%@",model.title);
+             }
+             
+             [_radioList reloadData];
+         }
+         [_radioList.pullToRefreshView stopAnimating];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         [_radioList.pullToRefreshView stopAnimating];
+     }];
+    
+    return TRUE;
 }
 
 #pragma mark - Table view data source
@@ -51,17 +146,32 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 100;
+    return [_channels count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self tableView:_radioList cellForRowAtIndexPath:indexPath];
+    
+    
+    return cell.frame.size.height;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
+    static NSString *RadioCell = @"RadioCell";
     
-    // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"Item %d",indexPath.row];
+    if(indexPath.row>=[_channels count])
+        return nil;
     
+    ChannelModel* c = _channels[indexPath.row];
+    
+    UITableViewCell *cell = [_radioList dequeueReusableCellWithIdentifier:RadioCell];
+    if(cell==nil)
+    {
+        cell = [[RadioListViewCell alloc] initWithChannel:c];
+    }
     return cell;
 }
 
