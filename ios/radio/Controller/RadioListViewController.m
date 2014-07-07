@@ -171,7 +171,7 @@
     UITableViewCell *cell = [_radioList dequeueReusableCellWithIdentifier:RadioCell];
     if(cell==nil)
     {
-        cell = [[RadioListViewCell alloc] initWithChannel:c];
+        cell = [[RadioListViewCell alloc] initWithChannel:c:_radioList.frame.size.width];
     }
     return cell;
 }

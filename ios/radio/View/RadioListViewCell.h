@@ -11,6 +11,6 @@
 
 @interface RadioListViewCell : UITableViewCell
 
-- (instancetype) initWithChannel : (ChannelModel*)channel;
+- (instancetype) initWithChannel : (ChannelModel*)channel : (NSInteger)width;
 
 @end
