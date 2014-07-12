@@ -12,6 +12,8 @@
 #import "../View/RadioListViewCell.h"
 #import "../View/RadioListView.h"
 #import "../Model/ChannelModel.h"
+#import "MainViewController.h"
+#import "ChannelPlayerViewController.h"
 
 @interface RadioListViewController ()
 {
@@ -57,6 +59,10 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self setTitle:NSLocalizedString(@"App Name",nil)];
+    
+    UIBarButtonItem* backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = NSLocalizedString(@"Back",nil);
+    self.navigationItem.backBarButtonItem = backItem;
     
     _radioList = [[RadioListView alloc] initWithController:self];
 }
@@ -183,38 +189,7 @@
                                     
                                     [_radioList.pullToRefreshView stopAnimating];
                                 }
-     ];
-    
-    /*
-    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:strUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         if(responseObject!=nil)
-         {
-             [_channels removeAllObjects];
-             
-             NSDictionary* dict = responseObject;
-             
-             NSArray *keys = [dict allKeys];// 所有key
-             for(int i=0;i<[keys count];i++)
-             {
-                 NSString *key = [keys objectAtIndex:i];
-                 ChannelModel* model = [[ChannelModel alloc] initWithDictionary:[dict objectForKey:key]];
-                 model.key = key;
-                 
-                 [_channels addObject:model];
-                 NSLog(@"Load channel:%@",model.title);
-             }
-             
-             [_radioList reloadData];
-         }
-         [_radioList.pullToRefreshView stopAnimating];
-     }
-     failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", error);
-         [_radioList.pullToRefreshView stopAnimating];
-     }];*/
+    ];
     
     return TRUE;
 }
@@ -308,5 +283,19 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void) tableView:(UITableView*) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RadioListViewCell* cell = (RadioListViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    ChannelModel* channel = cell.channel;
+    
+    FLOG("select %@",channel.title);
+    
+    ChannelPlayerViewController* thePlayer = [ChannelPlayerViewController getInstance];
+    
+    //更新播放器中的频道
+    [thePlayer setChannel:channel];
+    [[MainViewController getInstance] pushViewController:thePlayer animated:true];
+}
 
 @end

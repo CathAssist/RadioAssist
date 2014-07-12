@@ -13,4 +13,5 @@
 
 - (instancetype) initWithChannel : (ChannelModel*)channel : (NSInteger)width;
 
+@property (strong,nonatomic,readonly) ChannelModel* channel;
 @end

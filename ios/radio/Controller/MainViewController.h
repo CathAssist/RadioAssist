@@ -10,4 +10,6 @@
 
 @interface MainViewController : UINavigationController
 
++ (MainViewController*) getInstance;
+
 @end

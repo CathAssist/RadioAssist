@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "../View/CurrentPlayerView.h"
+#import "RadioListViewController.h"
 
 @interface MainViewController ()
 {
@@ -16,6 +17,18 @@
 @end
 
 @implementation MainViewController
+
+
++ (MainViewController*) getInstance
+{
+    static MainViewController* theMainViewController = nil;
+    if(theMainViewController == nil)
+    {
+        theMainViewController = [[MainViewController alloc] initWithRootViewController:[[RadioListViewController alloc] initWithNibName:nil bundle:nil]];
+    }
+    
+    return theMainViewController;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
