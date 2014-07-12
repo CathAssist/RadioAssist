@@ -88,7 +88,7 @@
     }];
     
     _radioList.showsPullToRefresh = true;
-    [_radioList triggerPullToRefresh];
+    [self loadDefaultRadioList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,12 +97,95 @@
     // Dispose of any resources that can be recreated.
 }
 
+
++ (NSString*) getDataCacheDir
+{
+    NSString* strDataDir = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/datacache"];
+    
+    //如果目录不存在，则创建
+    NSFileManager *defaultManager = [NSFileManager defaultManager];
+    if (![defaultManager fileExistsAtPath:strDataDir]) {
+        [defaultManager createDirectoryAtPath:strDataDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    return strDataDir;
+}
+
+- (BOOL) loadDefaultRadioList
+{
+    NSString* strUrl = @"http://www.cathassist.org/radio/getradio.php";
+    
+    NSString* strFile = [[RadioListViewController getDataCacheDir] stringByAppendingPathComponent:[strUrl md5]];
+    
+    
+    //判断是否存在缓存文件
+    if ([[NSFileManager defaultManager] fileExistsAtPath:strFile] == FALSE)
+    {
+        //不存在缓存文件，刷新界面
+        [_radioList triggerPullToRefresh];
+        return FALSE;
+    }
+    
+    
+    //从缓存文件中加载数据
+    FLOG(@"Fetch radio list from cache...");
+    NSData *data=[NSData dataWithContentsOfFile:strFile];
+    
+    id result=[NSJSONSerialization JSONObjectWithData:data
+                                                  options:NSJSONReadingAllowFragments
+                                                    error:nil];
+    
+    [_channels removeAllObjects];
+    
+    NSDictionary* dict = result;
+    NSArray *keys = [dict allKeys];// 所有key
+    for(int i=0;i<[keys count];i++)
+    {
+        NSString *key = [keys objectAtIndex:i];
+        ChannelModel* model = [[ChannelModel alloc] initWithDictionary:[dict objectForKey:key]];
+        model.key = key;
+        
+        [_channels addObject:model];
+    }
+    [_radioList reloadData];
+    
+    return TRUE;
+}
+
 - (BOOL) refreshRadioList
 {
     NSString* strUrl = @"http://www.cathassist.org/radio/getradio.php";
-    NSLog(@"Fetch channel from:%@",strUrl);
+    FLOG(@"Fetch channel from:%@",strUrl);
     
-    //[AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    NSString* strFile = [[RadioListViewController getDataCacheDir] stringByAppendingPathComponent:[strUrl md5]];
+    
+    [[HttpManager defaultManager] downloadFromUrl:strUrl
+                                filePath:strFile
+                                complete:^(BOOL successed, NSDictionary *result)
+                                {
+                                    if (successed && result!=nil)
+                                    {
+                                        [_channels removeAllObjects];
+                                        
+                                        NSDictionary* dict = result;
+                                        NSArray *keys = [dict allKeys];// 所有key
+                                        for(int i=0;i<[keys count];i++)
+                                        {
+                                            NSString *key = [keys objectAtIndex:i];
+                                            ChannelModel* model = [[ChannelModel alloc] initWithDictionary:[dict objectForKey:key]];
+                                                     model.key = key;
+                                            
+                                            [_channels addObject:model];
+                                            FLOG(@"Load channel:%@",model.title);
+                                        }
+                                        [_radioList reloadData];
+                                    }
+                                    
+                                    [_radioList.pullToRefreshView stopAnimating];
+                                }
+     ];
+    
+    /*
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:strUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
@@ -131,7 +214,7 @@
      {
          NSLog(@"Error: %@", error);
          [_radioList.pullToRefreshView stopAnimating];
-     }];
+     }];*/
     
     return TRUE;
 }

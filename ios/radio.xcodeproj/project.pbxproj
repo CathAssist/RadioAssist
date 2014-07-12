@@ -19,6 +19,9 @@
 		C29C2B8119680A270045288F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29C2B8019680A270045288F /* Images.xcassets */; };
 		C29C2B8D19680A270045288F /* radioTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B8C19680A270045288F /* radioTests.m */; };
 		C29C2B9819680A560045288F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C29C2B9A19680A560045288F /* InfoPlist.strings */; };
+		C2AEA1FA197147CB0093C154 /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1F7197147CB0093C154 /* HttpManager.m */; };
+		C2AEA1FB197147CB0093C154 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1F9197147CB0093C154 /* ImageCache.m */; };
+		C2AEA1FF19714A7E0093C154 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1FE19714A7E0093C154 /* Reachability.m */; };
 		C2D4668D196917C900698DAD /* ChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668A196917C900698DAD /* ChannelModel.m */; };
 		C2D4668E196917C900698DAD /* TrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668C196917C900698DAD /* TrackModel.m */; };
 		C2D46691196921F000698DAD /* RadioListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D46690196921F000698DAD /* RadioListViewCell.m */; };
@@ -58,6 +61,14 @@
 		C29C2B8B19680A270045288F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C29C2B8C19680A270045288F /* radioTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = radioTests.m; sourceTree = "<group>"; };
 		C29C2B9919680A560045288F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C2AEA1F5197147CB0093C154 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataManager.h; path = DataManager/DataManager.h; sourceTree = "<group>"; };
+		C2AEA1F6197147CB0093C154 /* HttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpManager.h; path = DataManager/HttpManager.h; sourceTree = "<group>"; };
+		C2AEA1F7197147CB0093C154 /* HttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpManager.m; path = DataManager/HttpManager.m; sourceTree = "<group>"; };
+		C2AEA1F8197147CB0093C154 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCache.h; path = DataManager/ImageCache.h; sourceTree = "<group>"; };
+		C2AEA1F9197147CB0093C154 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageCache.m; path = DataManager/ImageCache.m; sourceTree = "<group>"; };
+		C2AEA1FD19714A7E0093C154 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Common/Reachability.h; sourceTree = "<group>"; };
+		C2AEA1FE19714A7E0093C154 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Common/Reachability.m; sourceTree = "<group>"; };
+		C2AEA20119717F090093C154 /* radio-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "radio-prefix.pch"; sourceTree = "<group>"; };
 		C2D46689196917C900698DAD /* ChannelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelModel.h; path = Model/ChannelModel.h; sourceTree = "<group>"; };
 		C2D4668A196917C900698DAD /* ChannelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelModel.m; path = Model/ChannelModel.m; sourceTree = "<group>"; };
 		C2D4668B196917C900698DAD /* TrackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackModel.h; path = Model/TrackModel.h; sourceTree = "<group>"; };
@@ -143,6 +154,8 @@
 		C29C2B7519680A270045288F /* radio */ = {
 			isa = PBXGroup;
 			children = (
+				C2AEA1FC19714A740093C154 /* Common */,
+				C2AEA1F4197147BB0093C154 /* DataManager */,
 				C2D46688196916F600698DAD /* Model */,
 				C236248A19680B8B0044E37E /* Controller */,
 				C236248919680B850044E37E /* View */,
@@ -162,6 +175,7 @@
 				C29C2B7819680A270045288F /* main.m */,
 				C29C2B9A19680A560045288F /* InfoPlist.strings */,
 				C23624A519680D210044E37E /* Localizable.strings */,
+				C2AEA20119717F090093C154 /* radio-prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -181,6 +195,27 @@
 				C29C2B8B19680A270045288F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C2AEA1F4197147BB0093C154 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				C2AEA1F5197147CB0093C154 /* DataManager.h */,
+				C2AEA1F6197147CB0093C154 /* HttpManager.h */,
+				C2AEA1F7197147CB0093C154 /* HttpManager.m */,
+				C2AEA1F8197147CB0093C154 /* ImageCache.h */,
+				C2AEA1F9197147CB0093C154 /* ImageCache.m */,
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		C2AEA1FC19714A740093C154 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C2AEA1FD19714A7E0093C154 /* Reachability.h */,
+				C2AEA1FE19714A7E0093C154 /* Reachability.m */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		C2D46688196916F600698DAD /* Model */ = {
@@ -330,15 +365,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2AEA1FF19714A7E0093C154 /* Reachability.m in Sources */,
 				C236249919680BA40044E37E /* RadioListView.m in Sources */,
 				C236249319680B980044E37E /* RadioListViewController.m in Sources */,
 				C29C2B7C19680A270045288F /* AppDelegate.m in Sources */,
 				C2D4668D196917C900698DAD /* ChannelModel.m in Sources */,
 				C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */,
 				C2D4668E196917C900698DAD /* TrackModel.m in Sources */,
+				C2AEA1FA197147CB0093C154 /* HttpManager.m in Sources */,
 				C2D46691196921F000698DAD /* RadioListViewCell.m in Sources */,
 				C29C2B7F19680A270045288F /* radio.xcdatamodeld in Sources */,
 				C236249219680B980044E37E /* MainViewController.m in Sources */,
+				C2AEA1FB197147CB0093C154 /* ImageCache.m in Sources */,
 				C29C2B7919680A270045288F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +507,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "radio/radio-prefix.pch";
 				INFOPLIST_FILE = radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,6 +522,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "radio/radio-prefix.pch";
 				INFOPLIST_FILE = radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

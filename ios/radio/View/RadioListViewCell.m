@@ -47,8 +47,7 @@
 //      [self.layer setBorderWidth:1.0];
         
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, CellHeight-20, CellHeight-20)];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_channel.logo]];
-        _imageView.image = [UIImage imageWithData:imageData];
+        [_imageView setImageURL:_channel.logo];
         
         //名称
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CellHeight, 15, rect.size.width-CellHeight, 20)];
