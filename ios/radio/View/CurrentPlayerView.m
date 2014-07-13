@@ -10,8 +10,7 @@
 
 @interface CurrentPlayerView ()
 {
-    UIButton *_btnPlay;     //播放按钮
-    UIButton *_btnPause;    //暂停按钮
+    UIButton* _btnPlayPause;     //播放按钮
 }
 @end
 
@@ -27,19 +26,12 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         self.layer.borderWidth = 1.0;
         
-        _btnPlay = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _btnPlay.frame = CGRectMake(10, 5, 40, 40);
-        [_btnPlay setImage:[UIImage imageNamed:@"play_ctrl"] forState:UIControlStateNormal];
+        _btnPlayPause = [[UIButton alloc] init];
+        _btnPlayPause.frame = CGRectMake(10, 5, 40, 40);
+        [_btnPlayPause setBackgroundImage:[UIImage imageNamed:@"play_ctrl"] forState:UIControlStateNormal];
+        [_btnPlayPause setBackgroundImage:[UIImage imageNamed:@"pause_ctrl"] forState:UIControlStateSelected];
         
-        
-        _btnPause = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _btnPause.frame = CGRectMake(10, 5, 40, 40);
-        [_btnPause setImage:[UIImage imageNamed:@"pause_ctrl"] forState:UIControlStateNormal];
-        
-        _btnPause.hidden = true;
-        
-        [self addSubview:_btnPlay];
-        [self addSubview:_btnPause];
+        [self addSubview:_btnPlayPause];
     }
     return self;
 }

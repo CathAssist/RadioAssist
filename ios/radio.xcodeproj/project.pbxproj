@@ -23,6 +23,7 @@
 		C2AEA1FB197147CB0093C154 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1F9197147CB0093C154 /* ImageCache.m */; };
 		C2AEA1FF19714A7E0093C154 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1FE19714A7E0093C154 /* Reachability.m */; };
 		C2AEA204197198F30093C154 /* ChannelPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA203197198F30093C154 /* ChannelPlayerViewController.m */; };
+		C2AEA2051972121C0093C154 /* ChannelPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA203197198F30093C154 /* ChannelPlayerViewController.m */; };
 		C2D4668D196917C900698DAD /* ChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668A196917C900698DAD /* ChannelModel.m */; };
 		C2D4668E196917C900698DAD /* TrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668C196917C900698DAD /* TrackModel.m */; };
 		C2D46691196921F000698DAD /* RadioListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D46690196921F000698DAD /* RadioListViewCell.m */; };
@@ -392,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C29C2B8D19680A270045288F /* radioTests.m in Sources */,
+				C2AEA2051972121C0093C154 /* ChannelPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
