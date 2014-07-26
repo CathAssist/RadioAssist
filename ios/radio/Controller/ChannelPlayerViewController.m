@@ -88,10 +88,12 @@
             dateCurrent = [NSDate date];
         }
         {
+            self.view.backgroundColor = RGBCOLOR(255, 255, 255);
+            
             //UI的创建
             scrollViewMain = [[UIScrollView alloc] initWithFrame:CGRectZero];
             scrollViewMain.contentSize = CGSizeMake(WINDOW_WIDTH, 500);
-            scrollViewMain.backgroundColor = RGBCOLOR(255, 255, 255);
+       //     scrollViewMain.backgroundColor = RGBCOLOR(255, 255, 255);
             [self.view addSubview:scrollViewMain];
             
             //初始化背景
