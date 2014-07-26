@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "UIViewController+AMSlideMenu.h"
 #import "STKAudioPlayer.h"
+#import "TrackListViewController.h"
 
 @interface ChannelPlayerViewController () <STKAudioPlayerDelegate>
 {
@@ -63,6 +64,17 @@
     curChannel = channel;
     [self setTitle:curChannel.title];
     [imageViewIcon setImageURL:curChannel.logo];
+    
+    [self updateUI];
+}
+
+- (void) updateUI
+{
+    TrackModel* curTrack = curChannel.currentTrack;
+    if(curTrack)
+    {
+        [labelCurAudio setText:curChannel.currentTrack.title];
+    }
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -193,13 +205,34 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    //添加右侧的列表按钮
+    UIImage *image = [UIImage imageNamed:@"MenuIcon"];
+    
+    CGRect frame = CGRectMake(0, 0, 24, 24);
+    
+    UIButton* button = [[UIButton alloc] initWithFrame:frame];
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button setShowsTouchWhenHighlighted:YES];
+    
+    [button addTarget:self action:@selector(showTrackList) forControlEvents:UIControlEventTouchDown];
+    
+    UIBarButtonItem* menuItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    [self.navigationItem setRightBarButtonItem:menuItem];
+    
+    
+    UIBarButtonItem* backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = NSLocalizedString(@"Back",nil);
+    self.navigationItem.backBarButtonItem = backItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     CGRect rtClient = self.view.frame;
     
-    scrollViewMain.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height-50);
+    scrollViewMain.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height);
     
     CGFloat width = rtClient.size.width;
     CGFloat height = rtClient.size.height;
@@ -240,6 +273,31 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showTrackList
+{
+    TrackListViewController* tc = [[TrackListViewController alloc] init];
+    [tc setChannel:curChannel];
+    
+    
+/*    [UIView animateWithDuration:0.7f
+                     animations:^{
+                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+                         
+                         [[MainViewController getInstance] pushViewController:tc animated:NO];
+                         [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.navigationController.view cache:NO];
+                     }];
+    */
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    self.navigationController.navigationBarHidden = NO;
+    [[MainViewController getInstance] pushViewController:tc animated:NO];
 }
 
 /*

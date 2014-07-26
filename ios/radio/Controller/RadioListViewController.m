@@ -71,7 +71,7 @@
 {
     CGRect rtClient = self.view.frame;
     
-    _radioList.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height-50);
+    _radioList.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height);
     
     [self.view addSubview:_radioList];
     

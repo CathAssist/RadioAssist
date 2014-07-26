@@ -7,12 +7,10 @@
 //
 
 #import "MainViewController.h"
-#import "../View/CurrentPlayerView.h"
 #import "RadioListViewController.h"
 
 @interface MainViewController ()
 {
-    CurrentPlayerView *_player;
 }
 @end
 
@@ -43,19 +41,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectZero];
+//    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    {
-        CGRect rtClient = self.view.frame;
-        
-        _player.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y+rtClient.size.height-50, rtClient.size.width, 50);
-        
-        [self.view addSubview:_player];
-    }
 }
 
 - (void)didReceiveMemoryWarning
