@@ -27,6 +27,7 @@
 		C2D4668D196917C900698DAD /* ChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668A196917C900698DAD /* ChannelModel.m */; };
 		C2D4668E196917C900698DAD /* TrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D4668C196917C900698DAD /* TrackModel.m */; };
 		C2D46691196921F000698DAD /* RadioListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D46690196921F000698DAD /* RadioListViewCell.m */; };
+		C2DA52101983947E00D74946 /* TrackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DA520F1983947E00D74946 /* TrackListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		C2D46690196921F000698DAD /* RadioListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RadioListViewCell.m; path = View/RadioListViewCell.m; sourceTree = "<group>"; };
 		C2D4669E1969333C00698DAD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2D4669F1969333E00698DAD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C2DA520E1983947E00D74946 /* TrackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackListViewController.h; path = Controller/TrackListViewController.h; sourceTree = "<group>"; };
+		C2DA520F1983947E00D74946 /* TrackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrackListViewController.m; path = Controller/TrackListViewController.m; sourceTree = "<group>"; };
 		C3B443D70E70449082394370 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +136,8 @@
 				C236249019680B980044E37E /* RadioListViewController.m */,
 				C2AEA202197198F30093C154 /* ChannelPlayerViewController.h */,
 				C2AEA203197198F30093C154 /* ChannelPlayerViewController.m */,
+				C2DA520E1983947E00D74946 /* TrackListViewController.h */,
+				C2DA520F1983947E00D74946 /* TrackListViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				C236249319680B980044E37E /* RadioListViewController.m in Sources */,
 				C2AEA204197198F30093C154 /* ChannelPlayerViewController.m in Sources */,
 				C29C2B7C19680A270045288F /* AppDelegate.m in Sources */,
+				C2DA52101983947E00D74946 /* TrackListViewController.m in Sources */,
 				C2D4668D196917C900698DAD /* ChannelModel.m in Sources */,
 				C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */,
 				C2D4668E196917C900698DAD /* TrackModel.m in Sources */,
