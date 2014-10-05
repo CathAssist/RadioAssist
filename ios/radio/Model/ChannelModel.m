@@ -26,7 +26,7 @@
         [self setValuesForKeysWithDictionary:dict];
     }
     
-    curTrack = 0;
+    curTrack = -1;
     return self;
 }
 
@@ -95,7 +95,12 @@
 
 - (TrackModel*)setTrackWithIndex:(NSInteger) index
 {
-    if(index < self.tracks.count)
+    if(index < 0)
+    {
+        curTrack = -1;
+        return nil;
+    }
+    else if(index < self.tracks.count)
     {
         curTrack = index;
         return [self.tracks objectAtIndex:curTrack];

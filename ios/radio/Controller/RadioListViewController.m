@@ -65,6 +65,7 @@
     self.navigationItem.backBarButtonItem = backItem;
     
     _radioList = [[RadioListView alloc] initWithController:self];
+    [self loadDefaultRadioList];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -94,7 +95,7 @@
     }];
     
     _radioList.showsPullToRefresh = true;
-    [self loadDefaultRadioList];
+    [_radioList reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,7 +154,6 @@
         
         [_channels addObject:model];
     }
-    [_radioList reloadData];
     
     return TRUE;
 }

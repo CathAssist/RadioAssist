@@ -14,8 +14,11 @@
 
 @interface ChannelPlayerViewController () <STKAudioPlayerDelegate>
 {
-    ChannelModel* curChannel;               //当前频道
+    ChannelModel* curChannel;               //当前显示的频道
+    ChannelModel* channelPlaying;           //正在播放的频道
+    NSString* trackPlaying;                 //当前播放器正在播放的Track
     STKAudioPlayer* trackPlayer;            //播放器
+    
     NSTimer* timerProgress;                 //执行每1秒刷新一下进度
     NSDateFormatter* dateFormatter;         //数据格式化
     NSDate* dateCurrent;                    //当前时间
@@ -61,6 +64,10 @@
 
 - (void) setChannel:(ChannelModel*) channel
 {
+    if(channel != channelPlaying)
+    {
+        [channel setTrackWithIndex:-1];
+    }
     curChannel = channel;
     [self setTitle:curChannel.title];
     [imageViewIcon setImageURL:curChannel.logo];
@@ -70,10 +77,30 @@
 
 - (void) updateUI
 {
+    if(curChannel == nil)
+        return;
+    
     TrackModel* curTrack = curChannel.currentTrack;
-    if(curTrack)
+    if(curTrack == nil)
     {
-        [labelCurAudio setText:curChannel.currentTrack.title];
+        [labelCurAudio setText:curChannel.desc];
+        [btnPlayPause setSelected:false];
+        return;
+    }
+    
+    [labelCurAudio setText:curChannel.currentTrack.title];
+    
+    if(curChannel == channelPlaying)
+    {
+        if(trackPlaying != curChannel.currentTrack.src)
+        {
+            [trackPlayer pause];
+            [self btnPlayPauseClicked];
+        }
+        else
+        {
+            [btnPlayPause setSelected:(STKAudioPlayerStatePlaying == trackPlayer.state)];
+        }
     }
 }
 
@@ -147,6 +174,7 @@
             btnPlayPause = [[UIButton alloc] init];
             [btnPlayPause setBackgroundImage:[UIImage imageNamed:@"play_ctrl"] forState:UIControlStateNormal];
             [btnPlayPause setBackgroundImage:[UIImage imageNamed:@"pause_ctrl"] forState:UIControlStateSelected];
+            [btnPlayPause addTarget:self action:@selector(btnPlayPauseClicked) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnPlayPause];
             
             //播放器把手
@@ -157,11 +185,13 @@
             //上一首
             btnPrev = [[UIButton alloc] init];
             [btnPrev setImage:[UIImage imageNamed:@"prev_ctrl"] forState:UIControlStateNormal];
+            [btnPrev addTarget:self action:@selector(btnPlayPrev) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnPrev];
             
             //下一首
             btnNext = [[UIButton alloc] init];
             [btnNext setImage:[UIImage imageNamed:@"next_ctrl"] forState:UIControlStateNormal];
+            [btnNext addTarget:self action:@selector(btnPlayNext) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnNext];
             
             //当前播放
@@ -267,6 +297,13 @@
     
     
     scrollViewMain.contentSize = CGSizeMake(width, width+115);
+    
+    [self updateUI];
+}
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -300,6 +337,67 @@
     [[MainViewController getInstance] pushViewController:tc animated:NO];
 }
 
+- (void)btnPlayPauseClicked
+{
+    if(curChannel == channelPlaying &&
+       STKAudioPlayerStatePlaying == trackPlayer.state)
+    {
+        [trackPlayer pause];
+    }
+    else
+    {
+        if(nil==curChannel.currentTrack)
+        {
+            [curChannel setTrackWithIndex:0];
+        }
+        
+        TrackModel* curTrack = curChannel.currentTrack;
+        if(curTrack == nil)
+        {
+            [labelCurAudio setText:curChannel.title];
+            return;
+        }
+        else
+        {
+            [labelCurAudio setText:curTrack.title];
+        }
+        
+        if(trackPlaying == curTrack.src)
+        {
+            [trackPlayer resume];
+        }
+        else
+        {
+            trackPlaying = curTrack.src;
+            channelPlaying = curChannel;
+            [trackPlayer play:trackPlaying];
+        }
+    }
+}
+
+- (void)btnPlayNext
+{
+    TrackModel* curTrack = [curChannel nextTrack];
+    if(curTrack == nil)
+    {
+        [trackPlayer stop];
+        return;
+    }
+    
+    [self updateUI];
+}
+
+- (void)btnPlayPrev
+{
+    TrackModel* curTrack = [curChannel prevTrack];
+    if(curTrack == nil)
+    {
+        [trackPlayer stop];
+        return;
+    }
+    
+    [self updateUI];
+}
 /*
 #pragma mark - Navigation
 
@@ -316,6 +414,27 @@
 ///////timer update
 -(void) timerProgressUpdate
 {
+    if(curChannel.currentTrack == nil || curChannel.currentTrack.src != trackPlaying)
+    {
+        [labelCurTime setText:@"00:00"];
+        sliderDuration.value = 0;
+        return;
+    }
+    
+    double duration = trackPlayer.duration;
+    if(duration < 0.1)
+    {
+        [labelCurTime setText:@"00:00"];
+        return;
+    }
+    
+    double progress = trackPlayer.progress;
+    NSString* curTime = [NSString stringWithFormat:@"%02d:%02d", (int)(progress)/60,(int)(progress)%60];
+    [labelCurTime setText:curTime];
+    
+    sliderDuration.maximumValue = duration;
+    sliderDuration.minimumValue = 0.0;
+    sliderDuration.value = progress;
 }
 
 
@@ -333,10 +452,22 @@
 /// Raised when the state of the player has changed
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState;
 {
+    if(STKAudioPlayerStatePlaying == state)
+    {
+        [btnPlayPause setSelected:true];
+    }
+    else
+    {
+        [btnPlayPause setSelected:false];
+    }
 }
 /// Raised when an item has finished playing
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration;
 {
+    if(STKAudioPlayerStopReasonEof == stopReason)
+    {
+        [self btnPlayNext];
+    }
 }
 /// Raised when an unexpected and possibly unrecoverable error has occured (usually best to recreate the STKAudioPlauyer)
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
