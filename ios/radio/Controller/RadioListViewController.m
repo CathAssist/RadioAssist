@@ -20,6 +20,7 @@
     RadioListView *_radioList;
     NSDateFormatter* _dateFormatter;
     NSMutableArray* _channels;
+    UIBarButtonItem* _curPlayingItem;
 }
 @end
 
@@ -66,6 +67,24 @@
     
     _radioList = [[RadioListView alloc] initWithController:self];
     [self loadDefaultRadioList];
+    
+    
+    {
+        //添加右侧的当前播放按钮
+        UIImage *image = [UIImage imageNamed:@"CurPlay"];
+    
+        CGRect frame = CGRectMake(0, 0, 24, 24);
+    
+        UIButton* button = [[UIButton alloc] initWithFrame:frame];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        [button setShowsTouchWhenHighlighted:YES];
+        
+        [button addTarget:self action:@selector(showCurChannel) forControlEvents:UIControlEventTouchDown];
+    
+        _curPlayingItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+//        [self.navigationItem setRightBarButtonItem:_curPlayingItem];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -96,6 +115,15 @@
     
     _radioList.showsPullToRefresh = true;
     [_radioList reloadData];
+    
+    if([[ChannelPlayerViewController getInstance] playingChannel] == nil)
+    {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
+    else
+    {
+        [self.navigationItem setRightBarButtonItem:_curPlayingItem];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -192,6 +220,17 @@
     ];
     
     return TRUE;
+}
+
+-(void)showCurChannel
+{
+    FLOG("show playing channel...");
+    
+    ChannelPlayerViewController* thePlayer = [ChannelPlayerViewController getInstance];
+    
+    //更新播放器中的频道
+    [thePlayer setChannel:nil];
+    [[MainViewController getInstance] pushViewController:thePlayer animated:true];
 }
 
 #pragma mark - Table view data source

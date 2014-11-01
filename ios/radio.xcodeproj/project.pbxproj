@@ -13,6 +13,8 @@
 		C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249519680BA40044E37E /* CurrentPlayerView.m */; };
 		C236249919680BA40044E37E /* RadioListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249719680BA40044E37E /* RadioListView.m */; };
 		C23624A319680D210044E37E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C23624A519680D210044E37E /* Localizable.strings */; };
+		C238553F1A04880C00BEAF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C238553E1A04880C00BEAF5A /* Foundation.framework */; };
+		C27E029F1A0487B100F76AF0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C27E029E1A0487B100F76AF0 /* AudioToolbox.framework */; };
 		C29C2B7919680A270045288F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7819680A270045288F /* main.m */; };
 		C29C2B7C19680A270045288F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7B19680A270045288F /* AppDelegate.m */; };
 		C29C2B7F19680A270045288F /* radio.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7D19680A270045288F /* radio.xcdatamodeld */; };
@@ -53,6 +55,9 @@
 		C236249E19680C340044E37E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C23624A019680C7A0044E37E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C23624A419680D210044E37E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C238553E1A04880C00BEAF5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C27E029D1A0486E400F76AF0 /* radio.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = radio.entitlements; sourceTree = "<group>"; };
+		C27E029E1A0487B100F76AF0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C29C2B7319680A270045288F /* radio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = radio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29C2B7719680A270045288F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C29C2B7819680A270045288F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -92,6 +97,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C238553F1A04880C00BEAF5A /* Foundation.framework in Frameworks */,
+				C27E029F1A0487B100F76AF0 /* AudioToolbox.framework in Frameworks */,
 				823670D9B5B8435E88BE2221 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +116,8 @@
 		676B9CF9A6B54737BE820885 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C238553E1A04880C00BEAF5A /* Foundation.framework */,
+				C27E029E1A0487B100F76AF0 /* AudioToolbox.framework */,
 				C3B443D70E70449082394370 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -165,6 +174,7 @@
 		C29C2B7519680A270045288F /* radio */ = {
 			isa = PBXGroup;
 			children = (
+				C27E029D1A0486E400F76AF0 /* radio.entitlements */,
 				C2AEA1FC19714A740093C154 /* Common */,
 				C2AEA1F4197147BB0093C154 /* DataManager */,
 				C2D46688196916F600698DAD /* Model */,
@@ -291,6 +301,15 @@
 				TargetAttributes = {
 					C29C2B7219680A270045288F = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = YM33ZKJD96;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+						};
 					};
 					C29C2B8519680A270045288F = {
 						CreatedOnToolsVersion = 6.0;
@@ -521,12 +540,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = radio/radio.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "radio/radio-prefix.pch";
 				INFOPLIST_FILE = radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -536,12 +559,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = radio/radio.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "radio/radio-prefix.pch";
 				INFOPLIST_FILE = radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

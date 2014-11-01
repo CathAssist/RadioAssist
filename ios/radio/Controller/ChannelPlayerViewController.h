@@ -15,4 +15,6 @@
 
 - (void) setChannel:(ChannelModel*) channel;
 
+- (ChannelModel*) playingChannel;
+
 @end

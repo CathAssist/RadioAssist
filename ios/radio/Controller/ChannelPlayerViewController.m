@@ -11,8 +11,12 @@
 #import "UIViewController+AMSlideMenu.h"
 #import "STKAudioPlayer.h"
 #import "TrackListViewController.h"
+#import "RMDateSelectionViewController.h"
+#import "MBProgressHUD.h"
+#import "ImageCache.h"
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface ChannelPlayerViewController () <STKAudioPlayerDelegate>
+@interface ChannelPlayerViewController () <STKAudioPlayerDelegate,RMDateSelectionViewControllerDelegate>
 {
     ChannelModel* curChannel;               //当前显示的频道
     ChannelModel* channelPlaying;           //正在播放的频道
@@ -21,7 +25,6 @@
     
     NSTimer* timerProgress;                 //执行每1秒刷新一下进度
     NSDateFormatter* dateFormatter;         //数据格式化
-    NSDate* dateCurrent;                    //当前时间
     
     //UI
     UIScrollView* scrollViewMain;       //界面下的mainview;
@@ -50,6 +53,11 @@
 
 @implementation ChannelPlayerViewController
 
+-(ChannelModel*) playingChannel
+{
+    return channelPlaying;
+}
+
 
 + (ChannelPlayerViewController*) getInstance
 {
@@ -64,10 +72,15 @@
 
 - (void) setChannel:(ChannelModel*) channel
 {
-    if(channel != channelPlaying)
+    if(channel == nil)
+    {
+        channel = channelPlaying;
+    }
+    else if(channel != channelPlaying)
     {
         [channel setTrackWithIndex:-1];
     }
+    
     curChannel = channel;
     [self setTitle:curChannel.title];
     [imageViewIcon setImageURL:curChannel.logo];
@@ -75,10 +88,68 @@
     [self updateUI];
 }
 
+- (void) setCurrentDate:(NSDate*)_date
+{
+    NSString* strDate = [dateFormatter stringFromDate:_date];
+    
+    NSString* strUrl = [NSString stringWithFormat:@"http://www.cathassist.org/radio/getradio.php?channel=%@&date=%@",curChannel.key,strDate];
+    NSLog(@"Fetch channel from:%@",strUrl);
+    
+    
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.dimBackground = YES;
+    hud.labelText = NSLocalizedString(@"Loading",nil);
+    [hud show:true];
+    
+    //    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:strUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         if(responseObject!=nil)
+         {
+             NSDictionary* dict = responseObject;
+             
+             ChannelModel* model = [[ChannelModel alloc] initWithDictionary:dict];
+             NSLog(@"Load channel:%@",model.title);
+             [self setChannel:model];
+             [hud removeFromSuperview];
+         }
+     }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         [hud removeFromSuperview];
+     }];
+}
+
+-(void) updateLockScreen
+{
+    if(channelPlaying == nil && channelPlaying.currentTrack == nil)
+        return;
+    
+    //更新锁屏时的歌曲信息
+    if (NSClassFromString(@"MPNowPlayingInfoCenter")) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        
+        [dict setObject:channelPlaying.currentTrack.title forKey:MPMediaItemPropertyTitle];
+        [dict setObject:channelPlaying.title forKey:MPMediaItemPropertyArtist];
+        //            [dict setObject:@"专辑名" forKey:MPMediaItemPropertyAlbumTitle];
+        
+        [UIImage imageWithURL:channelPlaying.logo callback:^(UIImage *image) {
+            [dict setObject:[[MPMediaItemArtwork alloc] initWithImage:image]
+                     forKey:MPMediaItemPropertyArtwork];
+            
+            [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+        }];
+    }
+}
+
 - (void) updateUI
 {
     if(curChannel == nil)
         return;
+    
+    [btnNowDay setTitle:curChannel.date forState:UIControlStateNormal];
     
     TrackModel* curTrack = curChannel.currentTrack;
     if(curTrack == nil)
@@ -99,7 +170,7 @@
         }
         else
         {
-            [btnPlayPause setSelected:(STKAudioPlayerStatePlaying == trackPlayer.state)];
+            [self setPlayingState:(STKAudioPlayerStatePlaying == trackPlayer.state)];
         }
     }
 }
@@ -122,9 +193,6 @@
             dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setLocale:[NSLocale currentLocale]];
             [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-            
-            //获取当前时间
-            dateCurrent = [NSDate date];
         }
         {
             self.view.backgroundColor = RGBCOLOR(255, 255, 255);
@@ -203,28 +271,33 @@
             
             //播放进度条
             sliderDuration = [[UISlider alloc] init];
+            [sliderDuration addTarget:self action:@selector(sliderDurationChanged:) forControlEvents:UIControlEventValueChanged];
             [scrollViewMain addSubview:sliderDuration];
             
             //上一日、下一日、当前日期
             btnPrevDay = [[UIButton alloc] init];
             [btnPrevDay setTitle:NSLocalizedString(@"Prev day", nil) forState:UIControlStateNormal];
             [btnPrevDay setTitleColor:RGBCOLOR(56, 114, 250) forState:UIControlStateNormal];
+            [btnPrevDay addTarget:self action:@selector(btnPrevDay) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnPrevDay];
             
             btnNextDay = [[UIButton alloc] init];
             [btnNextDay setTitle:NSLocalizedString(@"Next day", nil) forState:UIControlStateNormal];
             [btnNextDay setTitleColor:RGBCOLOR(56, 114, 250) forState:UIControlStateNormal];
+            [btnNextDay addTarget:self action:@selector(btnNextDay) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnNextDay];
             
             btnNowDay = [[UIButton alloc] init];
             [btnNowDay setTitle:@"2014-08-15" forState:UIControlStateNormal];
             [btnNowDay setTitleColor:RGBCOLOR(56, 114, 250) forState:UIControlStateNormal];
+            [btnNowDay addTarget:self action:@selector(btnNowDay) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnNowDay];
             
             //关于本广播
             btnAbout = [[UIButton alloc] init];
             [btnAbout setTitle:@"About this channel" forState:UIControlStateNormal];
             [btnAbout setTitleColor:RGBCOLOR(128, 128, 128) forState:UIControlStateNormal];
+            [btnAbout addTarget:self action:@selector(btnAboutChannel) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnAbout];
         }
     }
@@ -265,7 +338,6 @@
     scrollViewMain.frame = CGRectMake(rtClient.origin.x, rtClient.origin.y, rtClient.size.width, rtClient.size.height);
     
     CGFloat width = rtClient.size.width;
-    CGFloat height = rtClient.size.height;
     
     
     [imageViewBg setFrame:CGRectMake(width*0.1, width*0.05, width*0.8, width*0.8)];
@@ -280,8 +352,13 @@
     [labelCurTime setFrame:CGRectMake(0,width*(0.45+fIcon/2)-32,width,32)];
     
     [btnPlayPause setFrame:CGRectMake((width-41)/2, (width*0.95-41)/2, 41, 41)];
+    [btnPlayPause setSelected:false];
     
+    imageViewHandle.transform = CGAffineTransformMakeRotation(0);
+    imageViewHandle.layer.anchorPoint = CGPointMake(1.0, 0);
     [imageViewHandle setFrame:CGRectMake(width*0.55, width*0.1, width*0.45, width*0.45*1.4)];
+    imageViewHandle.transform = CGAffineTransformMakeRotation(-0.4);
+    
     
     [btnPrev setFrame:CGRectMake(width*0.05, width*0.85, 40, 40)];
     [btnNext setFrame:CGRectMake(width*0.95-40, width*0.85, 40, 40)];
@@ -299,17 +376,82 @@
     scrollViewMain.contentSize = CGSizeMake(width, width+115);
     
     [self updateUI];
+    
+    
+    //注册进程挂起和进程激活消息，用于控制动画的显示
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:@"applicationDidEnterBackground" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:@"applicationWillEnterForeground" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:@"applicationDidBecomeActive" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(remoteControlReceivedWithEvent:) name:@"remoteControlReceivedWithEvent" object:nil];
 }
 
 - (void) viewDidDisappear:(BOOL)animated
 {
-    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)applicationDidEnterBackground
+{
+    [self setPlayingState:false];
+}
+
+-(void)applicationWillEnterForeground
+{
+    if(trackPlayer.state == STKAudioPlayerStatePlaying
+       || trackPlayer.state == STKAudioPlayerStateBuffering)
+    {
+        [self setPlayingState:true];
+    }
+}
+
+-(void)applicationDidBecomeActive
+{
+    if(trackPlayer.state == STKAudioPlayerStatePlaying
+       || trackPlayer.state == STKAudioPlayerStateBuffering)
+    {
+        [self setPlayingState:true];
+    }
+}
+
+-(void)remoteControlReceivedWithEvent:(NSNotification*) notification
+{
+    UIEvent* e = [notification object];
+    
+    if (e.type == UIEventTypeRemoteControl)
+    {
+        switch (e.subtype)
+        {
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                if(trackPlayer.state == STKAudioPlayerStatePlaying)
+                {
+                    [trackPlayer pause];
+                    [self setPlayingState:NO];
+                }
+                else
+                {
+                    [trackPlayer resume];
+                    [self setPlayingState:YES];
+                }
+                NSLog(@"RemoteControlEvents: pause");
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+//                [self setCurrentTrack:channelPlaying.nextTrack];
+                NSLog(@"RemoteControlEvents: playModeNext");
+                break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+//                [self setCurrentTrack:channelPlaying.prevTrack];
+                NSLog(@"RemoteControlEvents: playPrev");
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 - (void)showTrackList
@@ -335,6 +477,44 @@
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     self.navigationController.navigationBarHidden = NO;
     [[MainViewController getInstance] pushViewController:tc animated:NO];
+}
+
+- (void) setPlayingState:(BOOL)_playing
+{
+    if(btnPlayPause.selected == _playing)
+        return;
+    btnPlayPause.selected = _playing;
+    
+    //当前播放时间
+    //    self.labelCurTime.text = !_playing ? @"10:11" : @"11:00:21";
+    
+    //调整Icon的状态(旋转/停止)
+    if(_playing)
+    {
+        CABasicAnimation* rotationAnimation;
+        rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];
+        rotationAnimation.duration = 10;
+        rotationAnimation.cumulative = YES;
+        rotationAnimation.repeatCount = 100000;
+        
+        [imageViewIcon.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+    }
+    else
+    {
+        [imageViewIcon.layer removeAllAnimations];
+    }
+    
+    
+    //调整handle的状态
+    [UIView beginAnimations:@"handleOn" context:nil];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    
+    imageViewHandle.transform = CGAffineTransformMakeRotation(_playing ? 0 : -0.4);
+    
+    [UIView commitAnimations];
 }
 
 - (void)btnPlayPauseClicked
@@ -373,6 +553,9 @@
             [trackPlayer play:trackPlaying];
         }
     }
+    
+    
+    [self setPlayingState:!btnPlayPause.isSelected];
 }
 
 - (void)btnPlayNext
@@ -385,6 +568,7 @@
     }
     
     [self updateUI];
+    [self updateLockScreen];
 }
 
 - (void)btnPlayPrev
@@ -397,6 +581,64 @@
     }
     
     [self updateUI];
+    [self updateLockScreen];
+}
+
+-(void)sliderDurationChanged:(id)sender
+{
+    [trackPlayer seekToTime:sliderDuration.value];
+}
+
+-(void)btnNextDay
+{
+    if(curChannel == nil)
+        return;
+    
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents* adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:0];
+    [adcomps setMonth:0];
+    [adcomps setDay:1];
+    
+    NSDate* newdate = [calendar dateByAddingComponents:adcomps toDate:[dateFormatter dateFromString:curChannel.date] options:0];
+    
+    [self setCurrentDate:newdate];
+}
+
+-(void)btnPrevDay
+{
+    if(curChannel == nil)
+        return;
+    
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents* adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:0];
+    [adcomps setMonth:0];
+    [adcomps setDay:-1];
+    
+    NSDate* newdate = [calendar dateByAddingComponents:adcomps toDate:[dateFormatter dateFromString:curChannel.date] options:0];
+    
+    [self setCurrentDate:newdate];
+}
+
+-(void)btnNowDay
+{
+    RMDateSelectionViewController* dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
+    dateSelectionVC.delegate = self;
+    dateSelectionVC.datePicker.datePickerMode = UIDatePickerModeDate;
+    if(curChannel!=nil)
+    {
+        dateSelectionVC.datePicker.date = [dateFormatter dateFromString:curChannel.date];
+    }
+    
+    [dateSelectionVC show];
+}
+
+-(void)btnAboutChannel
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.cathassist.org/radio/about.php?channel=%@",curChannel.key]]];
 }
 /*
 #pragma mark - Navigation
@@ -474,4 +716,17 @@
 {
     
 }
+
+
+- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate
+{
+    //选择了新的日期
+    [self setCurrentDate:aDate];
+}
+
+- (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc
+{
+    //Do something else
+}
+
 @end
