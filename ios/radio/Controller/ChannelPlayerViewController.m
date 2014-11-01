@@ -140,7 +140,7 @@
                      forKey:MPMediaItemPropertyArtwork];
             
             [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
-            
+
         }];
     }
 }
