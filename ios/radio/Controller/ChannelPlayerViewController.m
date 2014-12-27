@@ -92,6 +92,13 @@
 {
     NSString* strDate = [dateFormatter stringFromDate:_date];
     
+    if([strDate isEqualToString: channelPlaying.date])
+    {
+        [self setChannel:channelPlaying];
+        return;
+    }
+    
+    
     NSString* strUrl = [NSString stringWithFormat:@"http://www.cathassist.org/radio/getradio.php?channel=%@&date=%@",curChannel.key,strDate];
     NSLog(@"Fetch channel from:%@",strUrl);
     
@@ -110,8 +117,14 @@
              NSDictionary* dict = responseObject;
              
              ChannelModel* model = [[ChannelModel alloc] initWithDictionary:dict];
-             NSLog(@"Load channel:%@",model.title);
-             [self setChannel:model];
+             model.key = curChannel.key;
+             model.desc = curChannel.desc;
+             
+             if([model.date isEqualToString:channelPlaying.date] == false)
+             {
+                 NSLog(@"Load channel:%@",model.title);
+                 [self setChannel:model];
+             }
              [hud removeFromSuperview];
          }
      }
@@ -155,7 +168,7 @@
     if(curTrack == nil)
     {
         [labelCurAudio setText:curChannel.desc];
-        [btnPlayPause setSelected:false];
+        [self setPlayingState:false];
         return;
     }
     

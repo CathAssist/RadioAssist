@@ -20,6 +20,7 @@
 -(void) setChannel:(ChannelModel*)channel
 {
     curChannel = channel;
+    [self setTitle:[NSString stringWithFormat:@"%@(%@)",channel.title,channel.date]];
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style
