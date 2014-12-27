@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		823670D9B5B8435E88BE2221 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B443D70E70449082394370 /* libPods.a */; };
-		C22645DC1A4E55CA00A9D646 /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C22645DB1A4E55CA00A9D646 /* libUMessage_Sdk_1.1.0.a */; };
 		C236249219680B980044E37E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236248E19680B980044E37E /* MainViewController.m */; };
 		C236249319680B980044E37E /* RadioListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249019680B980044E37E /* RadioListViewController.m */; };
 		C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249519680BA40044E37E /* CurrentPlayerView.m */; };
@@ -45,8 +44,6 @@
 
 /* Begin PBXFileReference section */
 		35B879C782064660B2B168F8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		C22645D81A4E557F00A9D646 /* UMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
-		C22645DB1A4E55CA00A9D646 /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUMessage_Sdk_1.1.0.a; path = radio/libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		C236248D19680B980044E37E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		C236248E19680B980044E37E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		C236248F19680B980044E37E /* RadioListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioListViewController.h; path = Controller/RadioListViewController.h; sourceTree = "<group>"; };
@@ -101,7 +98,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C238553F1A04880C00BEAF5A /* Foundation.framework in Frameworks */,
-				C22645DC1A4E55CA00A9D646 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				C27E029F1A0487B100F76AF0 /* AudioToolbox.framework in Frameworks */,
 				823670D9B5B8435E88BE2221 /* libPods.a in Frameworks */,
 			);
@@ -120,7 +116,6 @@
 		676B9CF9A6B54737BE820885 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C22645DB1A4E55CA00A9D646 /* libUMessage_Sdk_1.1.0.a */,
 				C238553E1A04880C00BEAF5A /* Foundation.framework */,
 				C27E029E1A0487B100F76AF0 /* AudioToolbox.framework */,
 				C3B443D70E70449082394370 /* libPods.a */,
@@ -238,7 +233,6 @@
 		C2AEA1FC19714A740093C154 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				C22645D81A4E557F00A9D646 /* UMessage.h */,
 				C2AEA1FD19714A7E0093C154 /* Reachability.h */,
 				C2AEA1FE19714A7E0093C154 /* Reachability.m */,
 			);
