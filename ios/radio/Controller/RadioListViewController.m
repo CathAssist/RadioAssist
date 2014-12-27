@@ -73,10 +73,12 @@
         //添加右侧的当前播放按钮
         UIImage *image = [UIImage imageNamed:@"CurPlay"];
     
-        CGRect frame = CGRectMake(0, 0, 24, 24);
+        CGRect frame = CGRectMake(0, 0, 60, 24);
     
         UIButton* button = [[UIButton alloc] initWithFrame:frame];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
+//        [button setBackgroundImage:image forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"Playing",nil) forState:UIControlStateNormal];
+        [button setTitleColor:RGBCOLOR(56, 114, 250) forState:UIControlStateNormal];
         [button setShowsTouchWhenHighlighted:YES];
         
         [button addTarget:self action:@selector(showCurChannel) forControlEvents:UIControlEventTouchDown];

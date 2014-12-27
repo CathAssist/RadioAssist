@@ -179,6 +179,7 @@
         if(trackPlaying != curChannel.currentTrack.src)
         {
             [trackPlayer pause];
+            [btnPlayPause setSelected:NO];
             [self btnPlayPauseClicked];
         }
         else
@@ -707,6 +708,9 @@
 /// Raised when the state of the player has changed
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState;
 {
+    if(curChannel != channelPlaying)
+        return;
+    
     if(STKAudioPlayerStatePlaying == state)
     {
         [btnPlayPause setSelected:true];
@@ -721,7 +725,25 @@
 {
     if(STKAudioPlayerStopReasonEof == stopReason)
     {
-        [self btnPlayNext];
+        //Play Next
+        if(curChannel == channelPlaying)
+        {
+            [self btnPlayNext];
+        }
+        else
+        {
+            TrackModel* curTrack = [channelPlaying nextTrack];
+            if(curTrack == nil)
+            {
+                [trackPlayer stop];
+                return;
+            }
+            
+            trackPlaying = curTrack.src;
+            [trackPlayer play:trackPlaying];
+        }
+        
+        [self updateLockScreen];
     }
 }
 /// Raised when an unexpected and possibly unrecoverable error has occured (usually best to recreate the STKAudioPlauyer)

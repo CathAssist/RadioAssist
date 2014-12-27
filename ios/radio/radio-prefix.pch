@@ -41,6 +41,7 @@
 #define FLOG(str, args...) ((void)0)
 #endif
 
+#define AMSlideMenuWithoutStoryboards
 
 #define DocumentPath     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 #define ResourcePath     [[NSBundle mainBundle] resourcePath]    //获取自定义文件的bundle路径
