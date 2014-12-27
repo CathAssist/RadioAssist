@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		823670D9B5B8435E88BE2221 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B443D70E70449082394370 /* libPods.a */; };
+		C218F2DE1A4EF9A000CB2EBB /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C218F2DD1A4EF9A000CB2EBB /* SettingsViewController.m */; };
 		C236249219680B980044E37E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236248E19680B980044E37E /* MainViewController.m */; };
 		C236249319680B980044E37E /* RadioListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249019680B980044E37E /* RadioListViewController.m */; };
 		C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249519680BA40044E37E /* CurrentPlayerView.m */; };
@@ -44,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		35B879C782064660B2B168F8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C218F2DC1A4EF9A000CB2EBB /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controller/SettingsViewController.h; sourceTree = "<group>"; };
+		C218F2DD1A4EF9A000CB2EBB /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controller/SettingsViewController.m; sourceTree = "<group>"; };
 		C236248D19680B980044E37E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		C236248E19680B980044E37E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		C236248F19680B980044E37E /* RadioListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioListViewController.h; path = Controller/RadioListViewController.h; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 				C2AEA203197198F30093C154 /* ChannelPlayerViewController.m */,
 				C2DA520E1983947E00D74946 /* TrackListViewController.h */,
 				C2DA520F1983947E00D74946 /* TrackListViewController.m */,
+				C218F2DC1A4EF9A000CB2EBB /* SettingsViewController.h */,
+				C218F2DD1A4EF9A000CB2EBB /* SettingsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -398,6 +403,7 @@
 				C2AEA1FF19714A7E0093C154 /* Reachability.m in Sources */,
 				C236249919680BA40044E37E /* RadioListView.m in Sources */,
 				C236249319680B980044E37E /* RadioListViewController.m in Sources */,
+				C218F2DE1A4EF9A000CB2EBB /* SettingsViewController.m in Sources */,
 				C2AEA204197198F30093C154 /* ChannelPlayerViewController.m in Sources */,
 				C29C2B7C19680A270045288F /* AppDelegate.m in Sources */,
 				C2DA52101983947E00D74946 /* TrackListViewController.m in Sources */,

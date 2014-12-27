@@ -14,6 +14,7 @@
 #import "../Model/ChannelModel.h"
 #import "MainViewController.h"
 #import "ChannelPlayerViewController.h"
+#import "SettingsViewController.h"
 
 @interface RadioListViewController ()
 {
@@ -21,6 +22,7 @@
     NSDateFormatter* _dateFormatter;
     NSMutableArray* _channels;
     UIBarButtonItem* _curPlayingItem;
+    UIBarButtonItem* _settingItem;
 }
 @end
 
@@ -68,7 +70,21 @@
     _radioList = [[RadioListView alloc] initWithController:self];
     [self loadDefaultRadioList];
     
-    
+    {
+        //添加左侧的设置按钮
+        UIImage* image = [UIImage imageNamed:@"Settings"];
+        CGRect frame = CGRectMake(0, 0, 24, 24);
+        
+        UIButton* button = [[UIButton alloc] initWithFrame:frame];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        [button setShowsTouchWhenHighlighted:YES];
+        
+        [button addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchDown];
+        
+        _settingItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        [self.navigationItem setLeftBarButtonItem:_settingItem];
+    }
     {
         //添加右侧的当前播放按钮
         UIImage *image = [UIImage imageNamed:@"CurPlay"];
@@ -232,7 +248,16 @@
     
     //更新播放器中的频道
     [thePlayer setChannel:nil];
-    [[MainViewController getInstance] pushViewController:thePlayer animated:true];
+    [[MainViewController getInstance] pushViewController:thePlayer animated:YES];
+}
+
+-(void)showSettings
+{
+    FLOG("show settings viewer");
+    
+    SettingsViewController* theSettings = [SettingsViewController getInstance];
+    
+    [[MainViewController getInstance] pushViewController:theSettings animated:YES];
 }
 
 #pragma mark - Table view data source
