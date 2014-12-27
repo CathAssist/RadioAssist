@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Controller/MainViewController.h"
 #import "UMessage.h"
+#import "MBProgressHUD.h"
 
 #define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #define _IPHONE80_ 80000
@@ -127,12 +128,22 @@
 
 - (BOOL) doRemoteNotification:(NSDictionary*)userInfo
 {
+    if(userInfo == nil)
+        return NO;
+    
     NSString* strType = [userInfo valueForKey:@"type"];
     NSString* strValue = [userInfo valueForKey:@"value"];
     
     if([strType isEqualToString:@"url"])
     {
+        UIView* curView = [[[UIApplication sharedApplication] windows] lastObject];
+        
+        MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:curView animated:YES];
+        hud.labelText = NSLocalizedString(@"Open URL...",nil);
+        
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strValue]];
+        
+        [hud removeFromSuperview];
         return YES;
     }
     
