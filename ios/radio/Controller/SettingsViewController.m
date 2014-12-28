@@ -12,7 +12,10 @@ static NSString* kDefaultCell = @"DefaultCell";
 static NSString* kSwtichCell = @"SwitchCell";
 
 @interface SettingsViewController ()
-
+{
+    UISwitch* _switchAutoGospel;
+    UISwitch* _switchAutoRefresh;
+}
 @end
 
 @implementation SettingsViewController
@@ -26,6 +29,20 @@ static NSString* kSwtichCell = @"SwitchCell";
     }
     
     return theInstance;
+}
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if(self)
+    {
+        _switchAutoGospel = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [_switchAutoGospel addTarget:self action:@selector(switchAutoGospelChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        _switchAutoRefresh = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [_switchAutoRefresh addTarget:self action:@selector(switchAutoRefreshChanged:) forControlEvents:UIControlEventValueChanged];
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -43,6 +60,17 @@ static NSString* kSwtichCell = @"SwitchCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)switchAutoGospelChanged:(id)sender
+{
+    
+}
+
+- (void)switchAutoRefreshChanged:(id)sender
+{
+    
 }
 
 #pragma mark - Table view data source
@@ -71,9 +99,6 @@ static NSString* kSwtichCell = @"SwitchCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
-        return 0;
-    
     return 30;
 }
 
@@ -83,9 +108,17 @@ static NSString* kSwtichCell = @"SwitchCell";
     
     if(indexPath.section == 0)
     {
-        UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
-        cell.accessoryView = switchview;
-        [cell.textLabel setText:@"Test"];
+        switch (indexPath.row) {
+            case 0:
+            {
+                cell.accessoryView = _switchAutoRefresh;
+                [cell.textLabel setText:NSLocalizedString(@"Auto refresh", nil)];
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
     else
     {

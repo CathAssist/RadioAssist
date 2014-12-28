@@ -11,3 +11,11 @@
 "Prev day" = "Prev";
 "Next day" = "Next";
 "Playing" = "Playing";
+"Today" = "Now";
+"Cancel" = "Cancel";
+"Select" = "Select";
+"Pull to refresh..." = "Pull to refresh...";
+"Release to refresh..." = "Release to refresh...";
+"Loading..." = "Loading...";
+"Auto play gospel" = "Auto play gospel";
+"Auto refresh" = "Auto refresh";

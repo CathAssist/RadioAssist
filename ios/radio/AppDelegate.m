@@ -82,9 +82,9 @@
     }
     
     
-    [RMDateSelectionViewController setLocalizedTitleForNowButton:@"今天"];
-    [RMDateSelectionViewController setLocalizedTitleForCancelButton:@"取消"];
-    [RMDateSelectionViewController setLocalizedTitleForSelectButton:@"选择"];
+    [RMDateSelectionViewController setLocalizedTitleForNowButton:NSLocalizedString(@"Today", nil)];
+    [RMDateSelectionViewController setLocalizedTitleForCancelButton:NSLocalizedString(@"Cancel", nil)];
+    [RMDateSelectionViewController setLocalizedTitleForSelectButton:NSLocalizedString(@"Select", nil)];
     
     
     //set StreamKit support play background

@@ -11,3 +11,11 @@
 "Prev day" = "上一天";
 "Next day" = "下一天";
 "Playing" = "播放中";
+"Today" = "今天";
+"Cancel" = "取消";
+"Select" = "选择";
+"Pull to refresh..." = "下拉刷新";
+"Release to refresh..." = "释放更新";
+"Loading..." = "加载中...";
+"Auto play gospel" = "自动播放福音";
+"Auto refresh" = "启动时自动更新";

@@ -42,6 +42,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 //    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectZero];
+    
+    NSString* configPath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"plist"];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:configPath];
+    NSLog(@"%@", data);//直接打印数据。
 }
 
 - (void)viewDidAppear:(BOOL)animated
