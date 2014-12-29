@@ -12,4 +12,7 @@
 
 + (MainViewController*) getInstance;
 
+
+- (BOOL) isAutoRefresh;
+- (void) setAutoRefresh:(BOOL)isOn;
 @end

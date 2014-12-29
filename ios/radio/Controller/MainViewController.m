@@ -11,6 +11,8 @@
 
 @interface MainViewController ()
 {
+    NSMutableDictionary* dicConfig;
+    NSString* configPath;
 }
 @end
 
@@ -43,9 +45,9 @@
     // Do any additional setup after loading the view.
 //    _player = [[CurrentPlayerView alloc] initWithFrame:CGRectZero];
     
-    NSString* configPath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"plist"];
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:configPath];
-    NSLog(@"%@", data);//直接打印数据。
+    configPath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"plist"];
+    dicConfig = [[NSMutableDictionary alloc] initWithContentsOfFile:configPath];
+    NSLog(@"%@", dicConfig);//直接打印数据。
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,6 +61,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL) isAutoRefresh
+{
+    NSNumber* nOn = [dicConfig objectForKey:@"AutoRefresh"];
+    
+    return [nOn isEqualToNumber:[[NSNumber alloc] initWithInt:1]];
+}
+- (void) setAutoRefresh:(BOOL)isOn
+{
+    NSNumber* nOn = [[NSNumber alloc] initWithInt:(isOn ? 1 : 0)];
+    
+    [dicConfig setObject:nOn forKey:@"AutoRefresh"];
+    [dicConfig writeToFile:configPath atomically:YES];
+}
 /*
 #pragma mark - Navigation
 

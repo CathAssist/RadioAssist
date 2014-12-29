@@ -23,6 +23,8 @@
     NSMutableArray* _channels;
     UIBarButtonItem* _curPlayingItem;
     UIBarButtonItem* _settingItem;
+    
+    BOOL _firstAppear;
 }
 @end
 
@@ -41,6 +43,7 @@
         [_dateFormatter setDateFormat:@"YYYY-MM-dd"];
         
         _channels = [NSMutableArray new];
+        _firstAppear = YES;
     }
     return self;
 }
@@ -141,6 +144,16 @@
     else
     {
         [self.navigationItem setRightBarButtonItem:_curPlayingItem];
+    }
+    
+    
+    if(_firstAppear)
+    {
+        if([[MainViewController getInstance] isAutoRefresh])
+        {
+            [_radioList triggerPullToRefresh];
+        }
+        _firstAppear = NO;
     }
 }
 

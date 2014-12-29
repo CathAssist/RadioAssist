@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "MainViewController.h"
 
 static NSString* kDefaultCell = @"DefaultCell";
 static NSString* kSwtichCell = @"SwitchCell";
@@ -55,6 +56,12 @@ static NSString* kSwtichCell = @"SwitchCell";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kDefaultCell];
+    [_switchAutoRefresh setOn:[[MainViewController getInstance] isAutoRefresh] animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [_switchAutoRefresh setOn:[[MainViewController getInstance] isAutoRefresh] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,8 +77,9 @@ static NSString* kSwtichCell = @"SwitchCell";
 
 - (void)switchAutoRefreshChanged:(id)sender
 {
-    
+    [[MainViewController getInstance] setAutoRefresh:[_switchAutoRefresh isOn]];
 }
+
 
 #pragma mark - Table view data source
 
@@ -120,14 +128,46 @@ static NSString* kSwtichCell = @"SwitchCell";
                 break;
         }
     }
-    else
+    else if(indexPath.section == 1)
     {
-        [cell.textLabel setText:@"Test"];
+        switch (indexPath.row) {
+            case 0:
+                [[cell textLabel] setText:NSLocalizedString(@"About us", nil)];
+                break;
+            case 1:
+                [[cell textLabel] setText:NSLocalizedString(@"Our taobao", nil)];
+                break;
+            default:
+                break;
+        }
     }
     
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+    {
+        switch (indexPath.row) {
+            case 0:
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.cathassist.org/3rd/aboutus.html"]];
+            }
+                break;
+            case 1:
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://taobao.cathassist.org"]];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

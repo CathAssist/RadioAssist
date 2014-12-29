@@ -309,7 +309,7 @@
             
             //关于本广播
             btnAbout = [[UIButton alloc] init];
-            [btnAbout setTitle:@"About this channel" forState:UIControlStateNormal];
+            [btnAbout setTitle:NSLocalizedString(@"About this channel", nil) forState:UIControlStateNormal];
             [btnAbout setTitleColor:RGBCOLOR(128, 128, 128) forState:UIControlStateNormal];
             [btnAbout addTarget:self action:@selector(btnAboutChannel) forControlEvents:UIControlEventTouchUpInside];
             [scrollViewMain addSubview:btnAbout];
