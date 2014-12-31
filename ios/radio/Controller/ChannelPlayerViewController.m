@@ -212,7 +212,7 @@
             //设置日期格式化方式
             dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setLocale:[NSLocale currentLocale]];
-            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         }
         {
             self.view.backgroundColor = RGBCOLOR(255, 255, 255);
