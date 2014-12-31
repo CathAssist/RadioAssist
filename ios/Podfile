@@ -6,5 +6,5 @@ pod "StreamingKit"
 pod "SVPullToRefresh"
 pod "RMDateSelectionViewController"
 pod "MBProgressHUD"
-pod 'UMengAnalytics'
+pod 'UMengAnalytics-NO-IDFA'
 pod 'UMengMessage'

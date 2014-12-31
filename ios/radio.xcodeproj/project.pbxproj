@@ -10,6 +10,7 @@
 		823670D9B5B8435E88BE2221 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B443D70E70449082394370 /* libPods.a */; };
 		C218F2DE1A4EF9A000CB2EBB /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C218F2DD1A4EF9A000CB2EBB /* SettingsViewController.m */; };
 		C218F2E01A4F847000CB2EBB /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = C218F2DF1A4F847000CB2EBB /* config.plist */; };
+		C218F2E21A542E9800CB2EBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C218F2E11A542E9800CB2EBB /* Images.xcassets */; };
 		C236249219680B980044E37E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236248E19680B980044E37E /* MainViewController.m */; };
 		C236249319680B980044E37E /* RadioListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249019680B980044E37E /* RadioListViewController.m */; };
 		C236249819680BA40044E37E /* CurrentPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C236249519680BA40044E37E /* CurrentPlayerView.m */; };
@@ -20,7 +21,6 @@
 		C29C2B7919680A270045288F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7819680A270045288F /* main.m */; };
 		C29C2B7C19680A270045288F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7B19680A270045288F /* AppDelegate.m */; };
 		C29C2B7F19680A270045288F /* radio.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B7D19680A270045288F /* radio.xcdatamodeld */; };
-		C29C2B8119680A270045288F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29C2B8019680A270045288F /* Images.xcassets */; };
 		C29C2B8D19680A270045288F /* radioTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C29C2B8C19680A270045288F /* radioTests.m */; };
 		C29C2B9819680A560045288F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C29C2B9A19680A560045288F /* InfoPlist.strings */; };
 		C2AEA1FA197147CB0093C154 /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AEA1F7197147CB0093C154 /* HttpManager.m */; };
@@ -49,6 +49,7 @@
 		C218F2DC1A4EF9A000CB2EBB /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controller/SettingsViewController.h; sourceTree = "<group>"; };
 		C218F2DD1A4EF9A000CB2EBB /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controller/SettingsViewController.m; sourceTree = "<group>"; };
 		C218F2DF1A4F847000CB2EBB /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		C218F2E11A542E9800CB2EBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C236248D19680B980044E37E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		C236248E19680B980044E37E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		C236248F19680B980044E37E /* RadioListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioListViewController.h; path = Controller/RadioListViewController.h; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		C29C2B7A19680A270045288F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C29C2B7B19680A270045288F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C29C2B7E19680A270045288F /* radio.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = radio.xcdatamodel; sourceTree = "<group>"; };
-		C29C2B8019680A270045288F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C29C2B8619680A270045288F /* radioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = radioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29C2B8B19680A270045288F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C29C2B8C19680A270045288F /* radioTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = radioTests.m; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 				C236248919680B850044E37E /* View */,
 				C29C2B7A19680A270045288F /* AppDelegate.h */,
 				C29C2B7B19680A270045288F /* AppDelegate.m */,
-				C29C2B8019680A270045288F /* Images.xcassets */,
+				C218F2E11A542E9800CB2EBB /* Images.xcassets */,
 				C29C2B7D19680A270045288F /* radio.xcdatamodeld */,
 				C29C2B7619680A270045288F /* Supporting Files */,
 			);
@@ -351,7 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C218F2E01A4F847000CB2EBB /* config.plist in Resources */,
-				C29C2B8119680A270045288F /* Images.xcassets in Resources */,
+				C218F2E21A542E9800CB2EBB /* Images.xcassets in Resources */,
 				C23624A319680D210044E37E /* Localizable.strings in Resources */,
 				C29C2B9819680A560045288F /* InfoPlist.strings in Resources */,
 			);
@@ -565,7 +565,6 @@
 					"$(PROJECT_DIR)/radio",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6cf748b0-8749-4b94-9b5b-bca0cd36816e";
 			};
 			name = Debug;
 		};
@@ -590,7 +589,6 @@
 					"$(PROJECT_DIR)/radio",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6cf748b0-8749-4b94-9b5b-bca0cd36816e";
 			};
 			name = Release;
 		};

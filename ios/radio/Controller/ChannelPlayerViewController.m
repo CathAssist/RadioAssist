@@ -76,6 +76,10 @@
     {
         channel = channelPlaying;
     }
+    else if([channel.key isEqualToString:channelPlaying.key] && [channel.date isEqualToString:channelPlaying.date])
+    {
+        channel = channelPlaying;
+    }
     else if(channel != channelPlaying)
     {
         [channel setTrackWithIndex:-1];
@@ -144,9 +148,11 @@
     if (NSClassFromString(@"MPNowPlayingInfoCenter")) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         
+        
         [dict setObject:channelPlaying.currentTrack.title forKey:MPMediaItemPropertyTitle];
         [dict setObject:channelPlaying.title forKey:MPMediaItemPropertyArtist];
-        //            [dict setObject:@"专辑名" forKey:MPMediaItemPropertyAlbumTitle];
+        [dict setObject:[[NSNumber alloc] initWithDouble:trackPlayer.duration] forKey:MPMediaItemPropertyPlaybackDuration];
+        //[dict setObject:@"专辑名" forKey:MPMediaItemPropertyAlbumTitle];
         
         [UIImage imageWithURL:channelPlaying.logo callback:^(UIImage *image) {
             [dict setObject:[[MPMediaItemArtwork alloc] initWithImage:image]
@@ -397,7 +403,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:@"applicationWillEnterForeground" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:@"applicationDidBecomeActive" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(remoteControlReceivedWithEvent:) name:@"remoteControlReceivedWithEvent" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runRemoteControlReceivedWithEvent:) name:@"remoteControlReceivedWithEvent" object:nil];
 }
 
 - (void) viewDidDisappear:(BOOL)animated
@@ -433,7 +439,7 @@
     }
 }
 
--(void)remoteControlReceivedWithEvent:(NSNotification*) notification
+-(void)runRemoteControlReceivedWithEvent:(NSNotification*) notification
 {
     UIEvent* e = [notification object];
     
@@ -454,13 +460,27 @@
                 }
                 NSLog(@"RemoteControlEvents: pause");
                 break;
+            case UIEventSubtypeRemoteControlPlay:
+            {
+                [trackPlayer resume];
+                [self setPlayingState:YES];
+            }
+                break;
+            case UIEventSubtypeRemoteControlPause:
+            {
+                [trackPlayer pause];
+                [self setPlayingState:NO];
+            }
+                break;
             case UIEventSubtypeRemoteControlNextTrack:
 //                [self setCurrentTrack:channelPlaying.nextTrack];
                 NSLog(@"RemoteControlEvents: playModeNext");
+                [self btnPlayNext];
                 break;
             case UIEventSubtypeRemoteControlPreviousTrack:
 //                [self setCurrentTrack:channelPlaying.prevTrack];
                 NSLog(@"RemoteControlEvents: playPrev");
+                [self btnPlayPrev];
                 break;
             default:
                 break;
@@ -529,6 +549,8 @@
     imageViewHandle.transform = CGAffineTransformMakeRotation(_playing ? 0 : -0.4);
     
     [UIView commitAnimations];
+    
+    [self updateLockScreen];
 }
 
 - (void)btnPlayPauseClicked
@@ -698,12 +720,13 @@
 /// Raised when an item has started playing
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId;
 {
+    [self updateLockScreen];
 }
 /// Raised when an item has finished buffering (may or may not be the currently playing item)
 /// This event may be raised multiple times for the same item if seek is invoked on the player
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId;
 {
-    
+    [self updateLockScreen];
 }
 /// Raised when the state of the player has changed
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState;
@@ -719,6 +742,8 @@
     {
         [btnPlayPause setSelected:false];
     }
+    
+    [self updateLockScreen];
 }
 /// Raised when an item has finished playing
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration;

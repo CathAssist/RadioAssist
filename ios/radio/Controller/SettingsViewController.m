@@ -97,7 +97,7 @@ static NSString* kSwtichCell = @"SwitchCell";
             return 1;
             break;
         case 1:
-            return 2;
+            return 4;
             break;
         default:
             break;
@@ -135,6 +135,12 @@ static NSString* kSwtichCell = @"SwitchCell";
                 [[cell textLabel] setText:NSLocalizedString(@"About us", nil)];
                 break;
             case 1:
+                [[cell textLabel] setText:NSLocalizedString(@"Share RadioAssist", nil)];
+                break;
+            case 2:
+                [[cell textLabel] setText:NSLocalizedString(@"Vote for RadioAssist", nil)];
+                break;
+            case 3:
                 [[cell textLabel] setText:NSLocalizedString(@"Our taobao", nil)];
                 break;
             default:
@@ -157,10 +163,30 @@ static NSString* kSwtichCell = @"SwitchCell";
                 break;
             case 1:
             {
+                dispatch_async(dispatch_queue_create("share", NULL), ^{
+                    NSArray *activityItems = @[[NSString stringWithFormat:@"电台小助手 http://t.cn/RZU0uz3 \n提供梵蒂冈广播、晨星电台、福音i广播、每日福音等多个电台频道。"]];
+                    
+                    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                                                                                     applicationActivities:nil];
+                    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact,
+                                                                 UIActivityTypePrint,];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self presentViewController:activityController  animated:YES completion:nil];
+                    });
+                });
+            }
+                break;
+            case 2:
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/dian-tai-xiao-zhu-shou/id954975179"]];
+            }
+                break;
+            case 3:
+            {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://taobao.cathassist.org"]];
             }
                 break;
-                
             default:
                 break;
         }
