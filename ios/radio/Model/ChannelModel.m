@@ -44,8 +44,9 @@
         
         return;
     }
-    
-    [super setValue:value forKey:key];
+    //just return for undefinedkey;
+    return;
+//    [super setValue:value forKey:key];
 }
 
 

@@ -96,9 +96,9 @@
 {
     NSString* strDate = [dateFormatter stringFromDate:_date];
     
-    if([strDate isEqualToString: channelPlaying.date])
+    if([strDate isEqualToString: curChannel.date])
     {
-        [self setChannel:channelPlaying];
+        [self setChannel:curChannel];
         return;
     }
     
@@ -124,7 +124,7 @@
              model.key = curChannel.key;
              model.desc = curChannel.desc;
              
-             if([model.date isEqualToString:channelPlaying.date] == false)
+             if([model.date isEqualToString:curChannel.date] == false)
              {
                  NSLog(@"Load channel:%@",model.title);
                  [self setChannel:model];
@@ -141,7 +141,7 @@
 
 -(void) updateLockScreen
 {
-    if(channelPlaying == nil && channelPlaying.currentTrack == nil)
+    if(channelPlaying == nil || channelPlaying.currentTrack == nil)
         return;
     
     //更新锁屏时的歌曲信息
@@ -185,7 +185,7 @@
         if(trackPlaying != curChannel.currentTrack.src)
         {
             [trackPlayer pause];
-            [btnPlayPause setSelected:NO];
+            [self setPlayingState:false];
             [self btnPlayPauseClicked];
         }
         else
@@ -600,6 +600,8 @@
     if(curTrack == nil)
     {
         [trackPlayer stop];
+        trackPlaying = nil;
+        [self updateUI];
         return;
     }
     
@@ -613,6 +615,8 @@
     if(curTrack == nil)
     {
         [trackPlayer stop];
+        trackPlaying = nil;
+        [self updateUI];
         return;
     }
     
@@ -736,11 +740,11 @@
     
     if(STKAudioPlayerStatePlaying == state)
     {
-        [btnPlayPause setSelected:true];
+        [self setPlayingState:true];
     }
     else
     {
-        [btnPlayPause setSelected:false];
+        [self setPlayingState:false];
     }
     
     [self updateLockScreen];
