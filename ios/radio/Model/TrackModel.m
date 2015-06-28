@@ -26,5 +26,10 @@
     [super setValue:value forKey:key];
 }
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    
+    return;
+}
 
 @end
