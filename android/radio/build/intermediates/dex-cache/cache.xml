@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/classes-d51921f1dd1583d0f00f3f8b85a3fdf0e13c37b6.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/Applications/adt-bundle-mac-x86_64-20140321/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-d9572364b70d5d6811f7e33410e82dd18f672ac9.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/classes-40ab0c3e68f4cc6a0f66d84addf24f96fdee8a59.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/.gradle/caches/modules-2/files-2.1/com.koushikdutta.ion/ion/2.1.6/cd55ef3ba6d8b62838b658ba2507b019dffb3a08/ion-2.1.6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cd55ef3ba6d8b62838b658ba2507b019dffb3a08">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/ion-2.1.6-a797234eb734f50c88120b2b262f8b7193b40c31.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/gson-2.3-643a8050987eb8e7b6c75128f44bedfaa5ea6513.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/.gradle/caches/modules-2/files-2.1/com.koushikdutta.async/androidasync/2.1.6/e3d5f6ab2003e31f2cf5ea61b4731a21e9517935/androidasync-2.1.6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e3d5f6ab2003e31f2cf5ea61b4731a21e9517935">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/androidasync-2.1.6-51ef2ece1da98e8f9f29f8a703746d44a2d23e7a.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/classes-1da297aaa1b88e56c82ed455542ea799506e98f9.jar" />
+    </item>
+    <item
+        jar="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/Users/LiYake/Projects/GitHub/RadioAssist/trunk/android/radio/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-04dbb48bbdac86722b842a1606a2840bcb12b72a.jar" />
+    </item>
+
+</items>

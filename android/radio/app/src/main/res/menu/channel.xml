@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:org.cathassist.radio="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/action_tracklist"
+        android:icon="@drawable/icon_list"
+        android:title="@string/app_name"
+        org.cathassist.radio:showAsAction="ifRoom"  />
+</menu>

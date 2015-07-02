@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="@dimen/channel_list_item_size"
+android:orientation="horizontal"
+android:padding="5dip"
+android:paddingBottom="15dp" >
+
+    <org.cathassist.image.SmartImageView
+        android:layout_width="@dimen/channel_list_item_size"
+        android:layout_height="fill_parent"
+        android:id="@+id/channel_list_item_logo" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/channel_list_item_titlesize"
+            android:text="Channel Title"
+            android:textColor="@color/myRadioTextColor"
+            android:id="@+id/channel_list_item_title"
+            android:paddingTop="@dimen/channel_list_item_titletoppadding"
+            android:paddingLeft="@dimen/channel_list_item_textpadding" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/channel_list_item_descsize"
+            android:text="Channel desc"
+            android:textColor="@color/myRadioTextColor"
+            android:id="@+id/channel_list_item_desc"
+            android:paddingTop="@dimen/channel_list_item_desctoppadding"
+            android:paddingLeft="@dimen/channel_list_item_textpadding"
+            />
+    </LinearLayout>
+
+</LinearLayout>

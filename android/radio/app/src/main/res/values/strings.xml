@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RadioAssist</string>
+    <string name="section_list">All channels</string>
+    <string name="section_playing">Playing</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="text_defaultmusic">我们因爱而相聚</string>
+    <string name="text_defaulttime">00:00</string>
+    <string name="text_prevday">上一日</string>
+    <string name="text_nextday">下一日</string>
+    <string name="text_defaultday">XXXX-XX-XX</string>
+    <string name="text_download">下载本日</string>
+    <string name="text_cancel">取消下载</string>
+    <string name="text_clear">清空下载</string>
+    <string name="text_feedback">反馈意见</string>
+    <string name="text_cxcopyright">版权归 晨星生命之音网络电台 所有</string>
+    <string name="text_cacopyright">本软件由 天主教小助手 协助开发</string>
+    <string name="str_about_cx">http://www.cxsm.org/bbs/</string>
+    <string name="str_about_us">http://www.cathassist.org/3rd/aboutus.html</string>
+</resources>
