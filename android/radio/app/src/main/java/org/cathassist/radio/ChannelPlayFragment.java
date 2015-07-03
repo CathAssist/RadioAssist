@@ -258,13 +258,13 @@ public class ChannelPlayFragment extends Fragment {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         inflater.inflate(R.menu.channel, menu);
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_tracklist) {
+        if (item.getItemId() == R.id.action_tracklist)
+        {
             Toast.makeText(getActivity(), "Example tracklist.", Toast.LENGTH_SHORT).show();
             return true;
         }

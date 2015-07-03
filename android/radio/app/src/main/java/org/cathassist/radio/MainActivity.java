@@ -1,17 +1,14 @@
 package org.cathassist.radio;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import org.cathassist.radio.model.Channel;
@@ -19,8 +16,8 @@ import org.cathassist.radio.model.Channel;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
-    public static Channel channelPlaying;
-    public static Channel channelShowing;
+    public static Channel channelPlaying = null;
+    public static Channel channelShowing = null;
 
 
     private int mCurrentFragmentPosition = 0;
@@ -49,14 +46,7 @@ public class MainActivity extends ActionBarActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
-//        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_drawer);
@@ -67,6 +57,27 @@ public class MainActivity extends ActionBarActivity
                 R.id.fragment_drawer,
                 (DrawerLayout) findViewById(R.id.drawer),
                 mToolbar);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCurrentFragmentPosition == 0)
+                {
+                    if(mNavigationDrawerFragment.isDrawerOpen())
+                    {
+                        mNavigationDrawerFragment.closeDrawer();
+                    }
+                    else
+                    {
+                        mNavigationDrawerFragment.openDrawer();
+                    }
+                }
+                else
+                {
+                    onBackPressed();
+                }
+            }
+        });
     }
 
     @Override
@@ -83,16 +94,19 @@ public class MainActivity extends ActionBarActivity
                         .commit();
 
                 if(mNavigationDrawerFragment != null)
-                    mNavigationDrawerFragment.showDrawerButton();
+                    mNavigationDrawerFragment.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
                 break;
             case 1:
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, ChannelPlayFragment.newInstance(channelShowing, position+1))
+                        .replace(R.id.container, ChannelPlayFragment.newInstance(channelShowing, position + 1))
                         .addToBackStack(null)
                         .commit();
 
-                mNavigationDrawerFragment.showBackButton();
+                mNavigationDrawerFragment.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+                break;
+            case 2:
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             default:
                 break;
@@ -120,16 +134,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-/*        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-//            restoreActionBar();
-            return true;
-        }
-*/
-        getMenuInflater().inflate(R.menu.main, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -141,10 +146,6 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
         switch (id)
         {
-            case R.id.home:
-                return true;
-            case R.id.action_settings:
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -154,7 +155,8 @@ public class MainActivity extends ActionBarActivity
     public void onBackPressed()
     {
         if(mCurrentFragmentPosition != 0){
-            onNavigationDrawerItemSelected(0);
+            mNavigationDrawerFragment.selectItem(0);
+//            onNavigationDrawerItemSelected(0);
         }
         else {
             finish();

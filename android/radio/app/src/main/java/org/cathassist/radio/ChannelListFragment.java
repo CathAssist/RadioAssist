@@ -126,7 +126,7 @@ public class ChannelListFragment extends Fragment
                         Channel channel = channels.get(position);
 
                         MainActivity.channelShowing = channel;
-                        MainActivity mainAct = (MainActivity)getActivity();
+                        MainActivity mainAct = (MainActivity) getActivity();
 //                        mainAct.onNavigationDrawerItemSelected(1);
                         mainAct.getmNavigationDrawerFragment().selectItem(1);
                     }
@@ -161,7 +161,9 @@ public class ChannelListFragment extends Fragment
                 }
 
                 channels = listChannels;
-                MainActivity.channelShowing = channels.get(0);
+                if(MainActivity.channelShowing == null) {
+                    MainActivity.channelShowing = channels.get(0);
+                }
                 mListView.setAdapter(new ChannelListAdapter(getActivity(), channels));
 
                 try {
