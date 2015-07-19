@@ -10,7 +10,7 @@ public class Channel implements Serializable
 	private String desc = "";
 	private Date date;
 	private String logo = "";
-	private ArrayList<ChannelItem> items;
+	private ArrayList<TrackItem> items;
 
 	public String getKey()
 	{
@@ -57,11 +57,11 @@ public class Channel implements Serializable
 		this.logo = logo;
 	}
 
-	public ArrayList<ChannelItem> getItems()
+	public ArrayList<TrackItem> getItems()
 	{
 		return this.items;
 	}
-	public void setItems(ArrayList<ChannelItem> items)
+	public void setItems(ArrayList<TrackItem> items)
 	{
 		this.items = items;
 	}

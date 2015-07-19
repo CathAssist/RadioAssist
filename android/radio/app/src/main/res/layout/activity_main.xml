@@ -32,5 +32,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:layout="@layout/fragment_navigation_drawer"/>
+
+        <fragment
+            android:id="@+id/fragment_drawer_tracks"
+            android:name="org.cathassist.radio.TracksFragment"
+            android:layout_width="@dimen/track_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            app:layout="@layout/fragment_tracks"/>
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

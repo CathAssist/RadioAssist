@@ -16,14 +16,10 @@ public class Common
 		Calendar c2 = Calendar.getInstance();
 		c1.setTime(d1);
 		c2.setTime(d2);
-		if(c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH)
-				&& c1.get(Calendar.MONTH)==c2.get(Calendar.MONTH)
-				&& c1.get(Calendar.YEAR)==c2.get(Calendar.YEAR))
-		{
-			return true;
-		}
-		
-		return false;
+		return c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH)
+				&& c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH)
+				&& c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR);
+
 	}
 	
 	public static String readContentFromFile(String fileName)

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by LiYake on 15/6/21.
  */
 
-public class ChannelItem implements Serializable
+public class TrackItem implements Serializable
 {
     private String title = "";
     private String src = "";
@@ -37,5 +37,11 @@ public class ChannelItem implements Serializable
     public void setSinger(String singer)
     {
         this.singer = singer;
+    }
+
+    @Override
+    public String toString()
+    {
+        return title;
     }
 }

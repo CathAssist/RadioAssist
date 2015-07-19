@@ -98,7 +98,7 @@ public class ChannelListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = (View) inflater.inflate(
+        View root = inflater.inflate(
                 R.layout.fragment_channel_list, container, false);
 
         //Change actionbar's title
@@ -125,7 +125,7 @@ public class ChannelListFragment extends Fragment
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Channel channel = channels.get(position);
 
-                        MainActivity.channelShowing = channel;
+                        MainActivity.getMainActivity().setChannelShowing(channel);
                         MainActivity mainAct = (MainActivity) getActivity();
 //                        mainAct.onNavigationDrawerItemSelected(1);
                         mainAct.getmNavigationDrawerFragment().selectItem(1);
@@ -161,8 +161,8 @@ public class ChannelListFragment extends Fragment
                 }
 
                 channels = listChannels;
-                if(MainActivity.channelShowing == null) {
-                    MainActivity.channelShowing = channels.get(0);
+                if(MainActivity.getMainActivity().getChannelShowing() == null) {
+                    MainActivity.getMainActivity().setChannelShowing(channels.get(0));
                 }
                 mListView.setAdapter(new ChannelListAdapter(getActivity(), channels));
 
@@ -252,7 +252,7 @@ public class ChannelListFragment extends Fragment
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

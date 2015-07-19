@@ -3,11 +3,11 @@ package org.cathassist.download;
 
 public interface DownloadTaskListener {
 
-    public void updateProcess(DownloadTask task);
+    void updateProcess(DownloadTask task);
 
-    public void finishDownload(DownloadTask task);
+    void finishDownload(DownloadTask task);
 
-    public void preDownload(DownloadTask task);
+    void preDownload(DownloadTask task);
 
-    public void errorDownload(DownloadTask task, Throwable error);
+    void errorDownload(DownloadTask task, Throwable error);
 }

@@ -13,7 +13,6 @@ public class RadioApplication extends Application {
     public void onCreate()
     {
         super.onCreate();
-
         DownloadManager.initSelf(this.getApplicationContext());
     }
 }

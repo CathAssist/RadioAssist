@@ -20,7 +20,7 @@ public class SmartImageTask implements Runnable {
             onComplete(bitmap);
         }
 
-        public void onComplete(Bitmap bitmap){};
+        public void onComplete(Bitmap bitmap){}
     }
 
     public abstract static class OnCompleteListener {

@@ -1,9 +1,12 @@
 package org.cathassist.radio;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
@@ -11,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 
 import org.cathassist.radio.model.Channel;
+import org.cathassist.radio.model.TrackItem;
 
 import java.text.SimpleDateFormat;
 
@@ -23,7 +27,7 @@ import java.text.SimpleDateFormat;
  * Use the {@link ChannelPlayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChannelPlayFragment extends Fragment {
+public class ChannelPlayFragment extends Fragment implements TracksFragmentCallbacks{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CHANNEL_PLAY = "channel";
@@ -32,6 +36,9 @@ public class ChannelPlayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Channel mChannel;
     private int mSectionNumber;
+
+    private TracksFragment mTracksFragment;
+
 
 
     private FrameLayout mainLayout = null;
@@ -161,43 +168,21 @@ public class ChannelPlayFragment extends Fragment {
             }
         });
 
-        /*
-        //发送反馈、晨星与小助手的copyright
-        TextView feedback = (TextView)mainLayout.findViewById(R.id.textView_feedback);
-        TextView cxcopyright = (TextView)mainLayout.findViewById(R.id.textView_cxcopyright);
-        TextView cacopyright = (TextView)mainLayout.findViewById(R.id.textView_cacopyright);
 
-        feedback.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                feedbackAgent.startFeedbackActivity();
-            }
-        });
-
-        cxcopyright.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                openUrlInBrowser("http://www.cxsm.org/bbs/");
-            }
-        });
-        cacopyright.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                openUrlInBrowser("http://www.cathassist.org/3rd/aboutus.html");
-            }
-        });
-        */
+        //init data
+        musicText.setText(mChannel.getDesc());
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mTracksFragment = ((MainActivity)getActivity()).getmTracksFragment();
+        mTracksFragment.setLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        mTracksFragment.setTracksFragmentCallbacks(this);
+
         if (getArguments() != null) {
-            mChannel = MainActivity.channelShowing;
+            mChannel = MainActivity.getMainActivity().getChannelShowing();
             mSectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
         }
     }
@@ -265,11 +250,23 @@ public class ChannelPlayFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_tracklist)
         {
-            Toast.makeText(getActivity(), "Example tracklist.", Toast.LENGTH_SHORT).show();
+            if(mTracksFragment.isDrawerOpen()) {
+                mTracksFragment.closeDrawer();
+            }
+            else
+            {
+                mTracksFragment.openDrawer();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTracksFragmentItemClicked(TrackItem item)
+    {
+        musicText.setText(item.getTitle());
     }
 
     /**
@@ -284,7 +281,6 @@ public class ChannelPlayFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
-
 }

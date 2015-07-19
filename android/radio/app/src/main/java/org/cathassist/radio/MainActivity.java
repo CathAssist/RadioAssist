@@ -16,31 +16,64 @@ import org.cathassist.radio.model.Channel;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
-    public static Channel channelPlaying = null;
-    public static Channel channelShowing = null;
 
+    private static MainActivity mMainActivity = null;
+    public static MainActivity getMainActivity()
+    {
+        return mMainActivity;
+    }
+
+    private Channel mChannelPlaying = null;
+    private Channel mChannelShowing = null;
 
     private int mCurrentFragmentPosition = 0;
     private Toolbar mToolbar;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragment mNavigationDrawerFragment = null;
+
+    private TracksFragment mTracksFragment = null;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
 
+    public void setChannelPlaying(Channel _c)
+    {
+        mChannelPlaying = _c;
+    }
+    public Channel getChannelPlaying()
+    {
+        return mChannelPlaying;
+    }
+
+    public void setChannelShowing(Channel _c)
+    {
+        mChannelShowing = _c;
+        mTracksFragment.setTracks(mChannelShowing.getItems());
+    }
+    public Channel getChannelShowing()
+    {
+        return mChannelShowing;
+    }
+
     public NavigationDrawerFragment getmNavigationDrawerFragment()
     {
         return mNavigationDrawerFragment;
+    }
+
+    public TracksFragment getmTracksFragment()
+    {
+        return mTracksFragment;
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMainActivity = this;
 
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -78,6 +111,12 @@ public class MainActivity extends ActionBarActivity
                 }
             }
         });
+
+        //
+        mTracksFragment = (TracksFragment)getFragmentManager()
+                .findFragmentById(R.id.fragment_drawer_tracks);
+        mTracksFragment.setup((DrawerLayout) findViewById(R.id.drawer));
+        mTracksFragment.setLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
@@ -95,11 +134,14 @@ public class MainActivity extends ActionBarActivity
 
                 if(mNavigationDrawerFragment != null)
                     mNavigationDrawerFragment.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+
+                if(mTracksFragment != null)
+                    mTracksFragment.setLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case 1:
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, ChannelPlayFragment.newInstance(channelShowing, position + 1))
+                        .replace(R.id.container, ChannelPlayFragment.newInstance(mChannelShowing, position + 1))
                         .addToBackStack(null)
                         .commit();
 
@@ -107,6 +149,8 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                break;
+            case 7:
                 break;
             default:
                 break;

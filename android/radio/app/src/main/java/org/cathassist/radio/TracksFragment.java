@@ -3,6 +3,10 @@ package org.cathassist.radio;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,9 @@ import android.widget.TextView;
 
 
 import org.cathassist.radio.dummy.DummyContent;
+import org.cathassist.radio.model.TrackItem;
+
+import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -34,8 +41,12 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<TrackItem> mTracks;
 
     private OnFragmentInteractionListener mListener;
+    private TracksFragmentCallbacks mCallbacks;
+
+    private DrawerLayout mDrawerLayout;
 
     /**
      * The fragment's ListView/GridView.
@@ -65,6 +76,11 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
     public TracksFragment() {
     }
 
+    public void setTracksFragmentCallbacks(TracksFragmentCallbacks _callback)
+    {
+        mCallbacks = _callback;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +102,7 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -97,12 +113,14 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        /*
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        */
     }
 
     @Override
@@ -111,12 +129,46 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
         mListener = null;
     }
 
+    public void setup(DrawerLayout drawerLayout) {
+        mDrawerLayout = drawerLayout;
+        mDrawerLayout.setStatusBarBackgroundColor(
+                getResources().getColor(R.color.myPrimaryDarkColor));
+        mDrawerLayout.setFocusableInTouchMode(true);
+    }
+
+    public void setTracks(ArrayList<TrackItem> tracks)
+    {
+        mTracks = tracks;
+        mAdapter = new ArrayAdapter<TrackItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1,
+                mTracks);
+        mListView.setAdapter(mAdapter);
+    }
+
+    public void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.END);
+    }
+
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.END);
+    }
+
+    public boolean isDrawerOpen()
+    {
+        return mDrawerLayout.isDrawerOpen(GravityCompat.END);
+    }
+
+    public void setLockMode(int lockMode)
+    {
+        mDrawerLayout.setDrawerLockMode(lockMode,GravityCompat.END);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+        if(mTracks != null) {
+            closeDrawer();
+            TrackItem item = mTracks.get(position);
+            mCallbacks.onTracksFragmentItemClicked(item);
         }
     }
 
@@ -145,7 +197,7 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        void onFragmentInteraction(String id);
     }
 
 }
