@@ -1,4 +1,4 @@
-package org.cathassist.radio.utils;
+package org.cathassist.utils;
 
 import java.io.*;
 import java.util.Calendar;
@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.http.util.EncodingUtils;
 
+import android.os.Environment;
 import android.util.Log;
 
 public class Common
@@ -64,5 +65,26 @@ public class Common
         }
 		
 		return true;
+	}
+
+    public static boolean isFileExists(String path)
+    {
+        File file = new File(path);
+        return file.exists();
+    }
+
+	public static boolean createDirIfNotExists(String path)
+	{
+		boolean ret = true;
+
+		File file = new File(path);
+		if (!file.exists()) {
+			if (!file.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating Image folder");
+				ret = false;
+			}
+		}
+		return ret;
+
 	}
 }

@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

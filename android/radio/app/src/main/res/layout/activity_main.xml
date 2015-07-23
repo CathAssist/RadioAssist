@@ -27,7 +27,7 @@
         <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
         <fragment
             android:id="@+id/fragment_drawer"
-            android:name="org.cathassist.radio.NavigationDrawerFragment"
+            android:name="org.cathassist.radio.ui.NavigationDrawerFragment"
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -35,7 +35,7 @@
 
         <fragment
             android:id="@+id/fragment_drawer_tracks"
-            android:name="org.cathassist.radio.TracksFragment"
+            android:name="org.cathassist.radio.ui.TracksFragment"
             android:layout_width="@dimen/track_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="end"

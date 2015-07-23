@@ -1,11 +1,9 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -13,10 +11,9 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
+import org.cathassist.radio.R;
 import org.cathassist.radio.model.Channel;
 import org.cathassist.radio.model.TrackItem;
-
-import java.text.SimpleDateFormat;
 
 
 /**

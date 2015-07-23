@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.cathassist.image.SmartImage;
 import org.cathassist.image.SmartImageView;
+import org.cathassist.radio.R;
 import org.cathassist.radio.model.Channel;
 
 import java.net.URI;

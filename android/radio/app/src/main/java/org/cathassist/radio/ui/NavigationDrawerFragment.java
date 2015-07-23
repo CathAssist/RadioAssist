@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.cathassist.radio.R;
 
 import java.util.ArrayList;
 import java.util.List;

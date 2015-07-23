@@ -2,13 +2,13 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header android:fragment="org.cathassist.radio.SettingsActivity$GeneralPreferenceFragment"
+    <header android:fragment="org.cathassist.radio.ui.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
-    <header android:fragment="org.cathassist.radio.SettingsActivity$NotificationPreferenceFragment"
+    <header android:fragment="org.cathassist.radio.ui.SettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications" />
 
-    <header android:fragment="org.cathassist.radio.SettingsActivity$DataSyncPreferenceFragment"
+    <header android:fragment="org.cathassist.radio.ui.SettingsActivity$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>

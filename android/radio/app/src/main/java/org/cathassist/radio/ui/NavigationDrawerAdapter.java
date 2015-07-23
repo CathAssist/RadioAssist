@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.cathassist.radio.R;
 
 import java.util.List;
 

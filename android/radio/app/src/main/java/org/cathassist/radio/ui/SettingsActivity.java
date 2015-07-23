@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+
+import org.cathassist.radio.R;
 
 import java.util.List;
 

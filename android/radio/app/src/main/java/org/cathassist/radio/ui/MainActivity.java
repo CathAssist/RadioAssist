@@ -1,4 +1,4 @@
-package org.cathassist.radio;
+package org.cathassist.radio.ui;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
 
+import org.cathassist.radio.R;
 import org.cathassist.radio.model.Channel;
 
 
