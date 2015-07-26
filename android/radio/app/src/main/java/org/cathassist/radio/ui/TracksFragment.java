@@ -138,9 +138,8 @@ public class TracksFragment extends Fragment implements AbsListView.OnItemClickL
     public void setTracks(ArrayList<TrackItem> tracks)
     {
         mTracks = tracks;
-        mAdapter = new ArrayAdapter<TrackItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1,
-                mTracks);
+
+        mAdapter = new TracksAdapter(getActivity(), tracks);
         mListView.setAdapter(mAdapter);
     }
 

@@ -32,4 +32,8 @@
     <dimen name="time_text_margin">-50dp</dimen>
     <dimen name="list_item_height">50dp</dimen>
     <dimen name="bottom_button_offset">100dp</dimen>
+
+    <dimen name="track_item_height">60dp</dimen>
+    <dimen name="track_item_title_width">180dp</dimen>
+    <dimen name="track_item_percent_widht">60dp</dimen>
 </resources>

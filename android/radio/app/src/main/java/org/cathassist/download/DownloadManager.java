@@ -167,5 +167,4 @@ public class DownloadManager {
             this.total = total;
         }
     }
-
 }
