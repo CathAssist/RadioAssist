@@ -1,10 +1,10 @@
 package org.cathassist.radio.ui;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +15,7 @@ import org.cathassist.radio.R;
 import org.cathassist.radio.model.Channel;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationDrawerCallbacks {
 
     private static MainActivity mMainActivity = null;

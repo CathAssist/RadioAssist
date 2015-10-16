@@ -8,7 +8,7 @@ public class Channel implements Serializable
 	private String key = "";
 	private String title = "";
 	private String desc = "";
-	private Date date;
+	private String date;
 	private String logo = "";
 	private ArrayList<TrackItem> items;
 
@@ -39,11 +39,11 @@ public class Channel implements Serializable
 		this.desc = desc;
 	}
 
-	public Date getDate()
+	public String getDate()
 	{
 		return this.date;
 	}
-	public void setDate(Date date)
+	public void setDate(String date)
 	{
 		this.date = date;
 	}

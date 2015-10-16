@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,6 @@ public class ChannelListFragment extends Fragment
     private ArrayList<Channel> channels;
 
 
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -93,17 +93,14 @@ public class ChannelListFragment extends Fragment
                 R.layout.fragment_channel_list, container, false);
 
         //Change actionbar's title
-        ActionBarActivity act = (ActionBarActivity)getActivity();
-        if(act != null)
-        {
+        AppCompatActivity act = (AppCompatActivity) getActivity();
+        if (act != null) {
             ActionBar bar = act.getSupportActionBar();
-            if(bar != null)
-            {
+            if (bar != null) {
                 bar.setTitle(R.string.app_name);
             }
 
         }
-
 
 
         mSRLayout = (SwipeRefreshLayout) root.findViewById(R.id.channel_list_srlayout);
@@ -139,20 +136,21 @@ public class ChannelListFragment extends Fragment
             @Override
             public void onCompleted(Exception e, JsonObject result) {
                 // do stuff with the result or error
+                Log.e("json", result.toString());
                 ArrayList<Channel> listChannels = new ArrayList<>();
                 Gson gson = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd")
                         .create();
 
-                Set<Map.Entry<String,JsonElement>> entrySet=result.entrySet();
-                for(Map.Entry<String,JsonElement> entry:entrySet) {
+                Set<Map.Entry<String, JsonElement>> entrySet = result.entrySet();
+                for (Map.Entry<String, JsonElement> entry : entrySet) {
                     Channel cc = gson.fromJson(entry.getValue(), Channel.class);
                     cc.setKey(entry.getKey());
                     listChannels.add(cc);
                 }
 
                 channels = listChannels;
-                if(MainActivity.getMainActivity().getChannelShowing() == null) {
+                if (MainActivity.getMainActivity().getChannelShowing() == null) {
                     MainActivity.getMainActivity().setChannelShowing(channels.get(0));
                 }
                 mListView.setAdapter(new ChannelListAdapter(getActivity(), channels));
@@ -161,9 +159,7 @@ public class ChannelListFragment extends Fragment
                     PrintWriter writer = new PrintWriter(DownloadManager.getCacheLocal(CHANNEL_LIST_API), "UTF-8");
                     writer.write(result.toString());
                     writer.close();
-                }
-                catch (Exception err)
-                {
+                } catch (Exception err) {
                     err.printStackTrace();
                 }
 
@@ -193,7 +189,7 @@ public class ChannelListFragment extends Fragment
     }
 
     @Override
-    public void onRefresh(){
+    public void onRefresh() {
 
         Future<JsonObject> fJson = DownloadManager.
                 getJsonObj("http://www.cathassist.org/radio/getradio.php", false);
@@ -220,9 +216,7 @@ public class ChannelListFragment extends Fragment
                     PrintWriter writer = new PrintWriter(DownloadManager.getCacheLocal(CHANNEL_LIST_API), "UTF-8");
                     writer.write(result.toString());
                     writer.close();
-                }
-                catch (Exception err)
-                {
+                } catch (Exception err) {
                     err.printStackTrace();
                 }
 

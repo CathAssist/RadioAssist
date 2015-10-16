@@ -1,6 +1,7 @@
 package org.cathassist.radio.ui;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,7 @@ public class TracksAdapter extends BaseAdapter {
     private Activity context;
     private ArrayList<TrackItem> tracks;
 
-    public TracksAdapter(Activity context, ArrayList<TrackItem> tracks)
-    {
+    public TracksAdapter(Activity context, ArrayList<TrackItem> tracks) {
         this.context = context;
         this.tracks = tracks;
     }
@@ -39,12 +39,9 @@ public class TracksAdapter extends BaseAdapter {
 
         titleView.setText(track.getTitle());
 
-        if(DownloadManager.getRadioCached(track.getSrc())=="")
-        {
+        if (TextUtils.equals(DownloadManager.getRadioCached(track.getSrc()), "")) {
             descView.setText(R.string.text_undownloaded);
-        }
-        else
-        {
+        } else {
             descView.setText(R.string.text_downloaded);
         }
 

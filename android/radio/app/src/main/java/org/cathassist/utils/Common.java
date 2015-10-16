@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.http.util.EncodingUtils;
+//import org.apache.http.util.EncodingUtils;
 
 import android.os.Environment;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class Common
 				int length = fin.available();
 				byte[] buffer = new byte[length];
 				fin.read(buffer);
-				content = EncodingUtils.getString(buffer, "UTF-8");
+//				content = EncodingUtils.getString(buffer, "UTF-8");
 				fin.close();
 		        Log.d("utils.Common","Read from file:"+fileName);
 			}

@@ -8,8 +8,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -153,8 +153,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
      * Changes the icon of the drawer to back
      */
     public void showBackButton() {
-        if (getActivity() instanceof ActionBarActivity) {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActivity() instanceof AppCompatActivity) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -162,8 +162,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
      * Changes the icon of the drawer to menu
      */
     public void showDrawerButton() {
-        if (getActivity() instanceof ActionBarActivity) {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        if (getActivity() instanceof AppCompatActivity) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
         mActionBarDrawerToggle.syncState();
     }
