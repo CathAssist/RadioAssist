@@ -1,0 +1,18 @@
+{
+	key:"vacn",			//channel key
+	title:"",			//channel名称
+	date:"",			//最新更新日期
+	logo:"",			//channel logo
+	items:{
+		{
+			title: "Track 1",
+			src:"something.mp3",
+			date:"",		//更新日期	
+		},
+		{
+			title: "Track 2",
+			src:"something.mp3",
+			date:"",		//更新日期	
+		},
+	}
+}
