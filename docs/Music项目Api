@@ -1,16 +1,14 @@
 Music项目Api
 获取Channel列表
-http://www.cathassist.org/music/getmusic.php
+http://www.cathassist.org/music/getfm.php
 
 
 
+获取某个Channel的播放列表
+http://www.cathassist.org/radio/getfm.php?channel=vacn&start=0&count=10&order=0
 
-
-
-
-
-
-
-
-
-http://www.cathassist.org/radio/getradio.php?&mode=list&channel=vacn&start=10&count=10&order=desc/aesc
+参数说明：
+channel 电台key
+start 起始id
+count 请求items的个数
+order 排序方式。 逆序：0；正序：1
