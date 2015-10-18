@@ -1,14 +1,16 @@
-{
+[
 	{
-		key: "vacn",
-		date: "2015-10-17",
-		logo: "",
-		desc: ""
+		key: "1084",
+		name: "梵蒂冈广播",
+		date: "2015-10-16",
+		logo: "http://www.cathassist.org/radio/logos/vacn.jpg",
+		desc: "每天半小时来自宗座的声音"
 	},
 	{
-		key: "vacn",
+		key: "1085",
+		name: "福音i广播",
 		date: "2015-10-17",
-		logo: "",
-		desc: ""
+		logo: "http://www.cathassist.org/radio/logos/ai.png",
+		desc: "来自8090的声音"
 	}
-}
+]
